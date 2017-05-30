@@ -1,22 +1,22 @@
 require 'minitest/autorun'
 require 'minitest/emoji'
 require 'minitest/pride'
-require_relative '../lib/merchant'
+require_relative '../lib/merchant_repository'
 require 'pry'
 
 
-class MerchantTest < Minitest::Test
+class MerchantRepositoryTest < Minitest::Test
 
 	def test_it_exsists
-		a = Merchant.new(name)
-		expected = Merchant
+		a = MerchantRepository.new(name)
+		expected = MerchantRepository
 		actual = a
 
 		assert_instance_of expected, actual
 	end
 
 	def test_shows_correct_id
-		a = Merchant.new(name)
+		a = MerchantRepository.new(name)
 		expected = nil
 		actual = a.id
 
@@ -24,7 +24,8 @@ class MerchantTest < Minitest::Test
 	end
 
 	def test_it_shows_changed_id_after_find_merch_id
-		a = Merchant.new(name)
+		skip
+		a = MerchantRepository.new(name)
 		a.find_merchant_id
 		expected = "12337411"
 		actual = a.id
@@ -33,7 +34,7 @@ class MerchantTest < Minitest::Test
 	end
 
 	def test_shows_correct_name
-		a = Merchant.new(name)
+		a = MerchantRepository.new(name)
 		expected = nil
 		actual = a.name
 
@@ -41,17 +42,12 @@ class MerchantTest < Minitest::Test
 	end
 
 	def test_it_shows_name
-		a = Merchant.new(name)
+		skip
+		a = MerchantRepository.new(name)
 		a.find_merchant_name
 		actual = a.name
 		expected = "CJsDecor"
 
 		assert_equal expected, actual
 	end
-
-	def test_
-
-	end
-
-
 end
