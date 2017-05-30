@@ -2,13 +2,14 @@ require 'minitest/autorun'
 require 'minitest/emoji'
 require 'minitest/pride'
 require_relative '../lib/merchant'
+require_relative '../lib/merchant_repository'
 require 'pry'
 
 
 class MerchantTest < Minitest::Test
 
 	def test_it_exsists
-		a = Merchant.new(name)
+		a = Merchant.new({:id => nil, :name => nil})
 		expected = Merchant
 		actual = a
 
@@ -16,42 +17,46 @@ class MerchantTest < Minitest::Test
 	end
 
 	def test_shows_correct_id
-		a = Merchant.new(name)
-		expected = nil
+		a = Merchant.new({:id => nil, :name => nil})
+		actual = a.id
+
+		assert_nil actual
+		assert_nil a.name
+	end
+
+	def test_shows_correct_id_again
+		a = Merchant.new({:id => "123", :name => "Pablo"})
+		expected = "123"
 		actual = a.id
 
 		assert_equal expected, actual
+		assert_equal "Pablo", a.name
 	end
 
-	def test_it_shows_changed_id_after_find_merch_id
-		a = Merchant.new(name)
-		a.find_merchant_id
-		expected = "12337411"
+	def test_shows_correct_id_still
+		a = Merchant.new({:id => "9923123", :name => "Pablo's brother Jake"})
+		expected = "9923123"
 		actual = a.id
 
 		assert_equal expected, actual
+		assert_equal "Pablo's brother Jake", a.name
 	end
 
-	def test_shows_correct_name
-		a = Merchant.new(name)
-		expected = nil
-		actual = a.name
+	def test_shows_correct_id_one_more_time
+		a = Merchant.new({:id => "169", :name => "Chen"})
+		expected = "169"
+		actual = a.id
 
 		assert_equal expected, actual
+		assert_equal "Chen", a.name
 	end
 
-	def test_it_shows_name
-		a = Merchant.new(name)
-		a.find_merchant_name
-		actual = a.name
-		expected = "CJsDecor"
+	def test_shows_correct_id_jk_still_gots_another
+		a = Merchant.new({:id => "a million", :name => "a billion"})
+		expected = "a million"
+		actual = a.id
 
 		assert_equal expected, actual
+		assert_equal "a billion", a.name
 	end
-
-	def test_
-
-	end
-
-
 end
