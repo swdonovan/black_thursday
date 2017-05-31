@@ -23,16 +23,6 @@ class MerchantRepositoryTest < Minitest::Test
 		assert_nil actual
 	end
 
-	def test_it_shows_changed_id_after_find_merch_id
-		skip
-		a = MerchantRepository.new(name)
-		a.find_merchant_id
-		expected = "12337411"
-		actual = a.id
-
-		assert_equal expected, actual
-	end
-
 	def test_shows_correct_name
 		a = MerchantRepository.new(name)
 		actual = a.name
@@ -49,5 +39,122 @@ class MerchantRepositoryTest < Minitest::Test
 		assert_equal expected, actual
 	end
 
+	def test_it_returns_nil_when_name_wrong
+		a = MerchantRepository.new(name)
+		actual = a.find_by_name("Craigers")
 
+		assert_nil actual
+	end
+
+	def test_it_shows_name_with_different_arguement
+		a = MerchantRepository.new(name)
+		b = a.find_by_name("GoldenRayPress")
+		actual = b.name
+		expected = "GoldenRayPress"
+
+		assert_equal expected, actual
+	end
+
+	def test_it_shows_name_with_different_arguement_again
+		a = MerchantRepository.new(name)
+		b = a.find_by_name("Keckenbauer")
+		actual = b.name
+		expected = "Keckenbauer"
+
+		assert_equal expected, actual
+	end
+
+	def test_it_takes_names_in_all_caps
+		a = MerchantRepository.new(name)
+		b = a.find_by_name("KECKENBAUER")
+		actual = b.name
+		expected = "Keckenbauer"
+
+		assert_equal expected, actual
+	end
+
+	def test_it_takes_crazy_case
+		a = MerchantRepository.new(name)
+		b = a.find_by_name("KeCkEnBaUeR")
+		actual = b.name
+		expected = "Keckenbauer"
+
+		assert_equal expected, actual
+	end
+
+	def test_it_takes_all_low_case
+		a = MerchantRepository.new(name)
+		b = a.find_by_name("keckenbauer")
+		actual = b.name
+		expected = "Keckenbauer"
+
+		assert_equal expected, actual
+	end
+
+	def test_it_takes_one_up_case_at_end
+		a = MerchantRepository.new(name)
+		b = a.find_by_name("keckenbaueR")
+		actual = b.name
+		expected = "Keckenbauer"
+
+		assert_equal expected, actual
+	end
+
+	def test_it_shows_name_one_more_time
+		a = MerchantRepository.new(name)
+		b = a.find_by_name("Shopin1901")
+		actual = b.name
+		expected = "Shopin1901"
+
+		assert_equal expected, actual
+	end
+
+	def test_it_shows_changed_id_after_find_merch_id
+		a = MerchantRepository.new(name)
+		b = a.find_by_id("12337411")
+		expected = "12337411"
+		actual = b.id
+
+		assert_equal expected, actual
+	end
+
+	def test_all_shows_all_instances
+		a = MerchantRepository.new(name)
+		expected = 475
+		actual = a.all.length
+
+		assert_equal expected, actual
+	end
+
+	def test_if_find_all_by_name_selects_ltd
+		a = MerchantRepository.new(name)
+		actual = a.find_all_by_name("ltd")
+		expected = ["Promotionalsearchltd"]
+
+		assert_equal expected, actual
+	end
+
+	def test_if_find_all_by_name_selects_ltd
+		a = MerchantRepository.new(name)
+		actual = a.find_all_by_name("the")
+		expected = ["TheLilPinkBowtique", "thepurplepenshop", "TheHamAndRat", "TheAssemblyRooms", "matthewbritts", "TheWoodchopDesign", "ToThePoints", "TheKnitBySusie", "CANNATHERAPYCO", "TheSequinnedOwl", "TheLittleGlitter", "ForTheLoveOfCop", "LeatherMinn", "SeeyouSoonthen", "SweetheartDarling", "WhatTheDoctorOrdered", "StatesmanLeather", "NicholasLeatherWorld", "TheHairFader", "southernncreations", "Gracebythebook", "SouthernComfrtCndles", "TheCullenChronicles", "thesageandspirit"]
+
+		assert_equal expected, actual
+	end
+
+	#
+	# def test_all_shows_instance
+	# 	a = MerchantRepository.new(name)
+	# 	b = a.all
+	#
+	# 	assert_equal true, b.include?("CJsDecor")
+	# end
+	#
+	# def test_all_includes_middle_lines
+	# 	a = MerchantRepository.new(name)
+	# 	binding.pry
+	# 	b = a.all
+	#
+	# 	assert_equal true, b.include?("JillMariedesigns51")
+	# end
 end
