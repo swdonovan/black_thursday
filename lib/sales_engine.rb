@@ -14,7 +14,7 @@ class SalesEngine
 	end
 end
 
-# se = SalesEngine.from_csv({
-#   :items     => ARGV[0],
-#   :merchants => ARGV[1],
-# })
+se = SalesEngine.from_csv({
+  :items     => ARGV[0],
+  :merchants => ARGV[1],
+})
