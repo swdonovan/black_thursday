@@ -160,7 +160,7 @@ class MerchantRepositoryTest < Minitest::Test
 
 	def test_if_it_returns_empty_array_when_passed_illegitimade_string_segment
 		a = MerchantRepository.new('./data/merchants.csv')
-		actual = a.find_all_by_name("az7")
+		actual = a.find_all_by_name("az7 ")
 		expected = []
 
 		assert_equal expected, actual
