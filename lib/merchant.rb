@@ -1,4 +1,3 @@
-require 'pry'
 require 'csv'
 
 
@@ -10,5 +9,4 @@ class Merchant
 		@name = merch_info[:name]
 		@id   = merch_info[:id]
 	end
-
 end

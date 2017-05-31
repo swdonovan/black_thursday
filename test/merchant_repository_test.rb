@@ -20,7 +20,7 @@ class MerchantRepositoryTest < Minitest::Test
 		expected = nil
 		actual = a.id
 
-		assert_equal expected, actual
+		assert_nil actual
 	end
 
 	def test_it_shows_changed_id_after_find_merch_id
@@ -35,19 +35,19 @@ class MerchantRepositoryTest < Minitest::Test
 
 	def test_shows_correct_name
 		a = MerchantRepository.new(name)
-		expected = nil
 		actual = a.name
 
-		assert_equal expected, actual
+		assert_nil actual
 	end
 
 	def test_it_shows_name
-		skip
 		a = MerchantRepository.new(name)
-		a.find_merchant_name
-		actual = a.name
+		b = a.find_by_name("CJsDecor")
+		actual = b.name
 		expected = "CJsDecor"
 
 		assert_equal expected, actual
 	end
+
+
 end
