@@ -70,4 +70,66 @@ class ItemTest < Minitest::Test
 
     assert_equal expected, actual
   end
+
+  def test_it_shows_the_right_information_passed_through_at_initialize
+    a = Item.new({:name => "Tyler", :id => "a million", :description => "Monster Spray",
+      :unit_price => "more than you can afford", :created_at => "now", :updated_at => "before", :merchant_id => "Prince symbol"})
+
+    assert_equal "Tyler", a.name
+    assert_equal "a million", a.id
+    assert_equal "Monster Spray", a.description
+    assert_equal "more than you can afford", a.unit_price
+    assert_equal "now", a.created_at
+    assert_equal "before", a.updated_at
+    assert_equal "Prince symbol", a.merchant_id
+  end
+
+  def test_it_shows_the_right_information_passed_different_info
+    a = Item.new({:name => "Bruce", :id => "685521578", :description => "Not avaliable",
+      :unit_price => "40,000", :created_at => "Monday", :updated_at => "Tuesday", :merchant_id => "56843166496526862"})
+
+    assert_equal "Bruce", a.name
+    assert_equal "685521578", a.id
+    assert_equal "Not avaliable", a.description
+    assert_equal "40,000", a.unit_price
+    assert_equal "Monday", a.created_at
+    assert_equal "Tuesday", a.updated_at
+    assert_equal "56843166496526862", a.merchant_id
+  end
+
+  def test_unit_price_to_dollars_correctly_converts_to_float
+    a = Item.new({:name => "Bruce", :id => "685521578", :description => "Not avaliable",
+      :unit_price => "40000", :created_at => "Monday", :updated_at => "Tuesday", :merchant_id => "56843166496526862"})
+    expected = 40000.00
+    actual = a.unit_price_to_dollars
+
+    assert_equal expected, actual
+  end
+
+  def test_unit_price_to_dollars_correctly_converts_different_number_to_float
+    a = Item.new({:name => "Bruce", :id => "685521578", :description => "Not avaliable",
+      :unit_price => "525", :created_at => "Monday", :updated_at => "Tuesday", :merchant_id => "56843166496526862"})
+    expected = 525.00
+    actual = a.unit_price_to_dollars
+
+    assert_equal expected, actual
+  end
+
+  def test_unit_price_to_dollars_correctly_only_returns_2_decimal_points
+    a = Item.new({:name => "Bruce", :id => "685521578", :description => "Not avaliable",
+      :unit_price => "525.964672", :created_at => "Monday", :updated_at => "Tuesday", :merchant_id => "56843166496526862"})
+    expected = 525.96
+    actual = a.unit_price_to_dollars
+
+    assert_equal expected, actual
+  end
+
+  def test_unit_price_to_dollars_correctly_only_returns_2_decimal_points_again
+    a = Item.new({:name => "Bruce", :id => "685521578", :description => "Not avaliable",
+      :unit_price => "1.23124565314865", :created_at => "Monday", :updated_at => "Tuesday", :merchant_id => "56843166496526862"})
+    expected = 1.23
+    actual = a.unit_price_to_dollars
+
+    assert_equal expected, actual
+  end
 end
