@@ -1,6 +1,7 @@
 require 'pry'
 require 'csv'
 require_relative 'merchant'
+# For initial setup commit
 
 class MerchantRepository
 	attr_reader :name,
