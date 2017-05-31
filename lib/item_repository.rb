@@ -4,7 +4,8 @@ require_relative 'item'
 
 class ItemRepository
 
-  attr_reader :contents, :all
+  attr_reader :contents,
+              :all
 
   def initialize(item_info)
 		@contents = CSV.open item_info, headers: true, header_converters: :symbol
@@ -18,5 +19,29 @@ class ItemRepository
     end
     return @all
   end
+
+  def find_by_id(id)
+		id = id.to_s
+		item = nil
+		@all.map do |word|
+		 item = word if id == word.id
+		end
+		return item
+	end
+
+  def find_by_name(name)
+    name = name.to_s.upcase
+    item = nil
+    @all.map do |word|
+     item = word if name == word.name.upcase
+    end
+    return item
+  end
+
+  def find_all_with_description(segment)
+		choices = @all.select do |item|
+			item.description.upcase.include?(segment.upcase)
+		end
+	end
 
 end

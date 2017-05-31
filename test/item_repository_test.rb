@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/emoji'
 require 'minitest/pride'
 require_relative '../lib/item_repository'
+require_relative '../lib/item'
 require 'pry'
 
 class ItemRepositoryTest < Minitest::Test
@@ -26,6 +27,120 @@ class ItemRepositoryTest < Minitest::Test
     a = ItemRepository.new('./data/items.csv')
     expected = Array
     actual = a.all.class
+
+    assert_equal expected, actual
+  end
+
+  def test_it_shows_changed_id_after_find_merch_id
+		a = ItemRepository.new('./data/items.csv')
+		b = a.find_by_id("12337411")
+		actual = b
+
+		assert_nil actual
+	end
+
+  def test_it_finds_id
+		a = ItemRepository.new('./data/items.csv')
+		b = a.find_by_id("263395237")
+		expected = "263395237"
+		actual = b.id
+
+		assert_equal expected, actual
+	end
+
+  def test_it_shows_changed_id_after_find_item_id
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_by_id("263567376")
+    expected = "263567376"
+    actual = b.id
+
+    assert_equal expected, actual
+  end
+
+  def test_it_shows_id
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_by_id("263567242")
+    expected = "263567242"
+    actual = b.id
+
+    assert_equal expected, actual
+  end
+
+  def test_it_takes_names_in_normal_type
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_by_name("510+ RealPush Icon Set")
+    actual = b.name
+    expected = "510+ RealPush Icon Set"
+
+    assert_equal expected, actual
+  end
+
+  def test_it_takes_names_in_crazy_case
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_by_name("510+ ReAlPuSh IcOn SeT")
+    actual = b.name
+    expected = "510+ RealPush Icon Set"
+
+    assert_equal expected, actual
+  end
+
+  def test_it_takes_names_in_all_caps
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_by_name("510+ REALPUSH ICON SET")
+    actual = b.name
+    expected = "510+ RealPush Icon Set"
+
+    assert_equal expected, actual
+  end
+
+  def test_it_takes_names_in_all_low_case
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_by_name("510+ realpush icon set")
+    actual = b.name
+    expected = "510+ RealPush Icon Set"
+
+    assert_equal expected, actual
+  end
+
+  def test_it_searches_partial_description
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_all_with_description("soft drugs prejudices")
+    actual = b[0].id if b[0] != nil
+    expected = "263402475"
+
+    assert_equal expected, actual
+  end
+
+  def test_it_searches_partial_description_again
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_all_with_description("hard monster spray")
+    actual = b[0].id if b[0] != nil
+
+    assert_nil actual
+  end
+
+  def test_it_searches_partial_description_once_more
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_all_with_description("man on the moon")
+    actual = b[0].id if b[0] != nil
+
+    assert_nil actual
+  end
+
+  def test_it_searches_partial_description_once_again
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_all_with_description("successful beer brands worldwide")
+    actual = b[0].id
+    expected = "263451053"
+
+    assert_equal expected, actual
+  end
+
+  def test_it_searches_partial_description_if_you_believe_us
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_all_with_description("man on the moon")
+    actual = b
+    expected = []
 
     assert_equal expected, actual
   end
