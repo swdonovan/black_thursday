@@ -141,5 +141,28 @@ class MerchantRepositoryTest < Minitest::Test
 
 		assert_equal expected, actual
 	end
-	
+
+	def test_if_it_finds_all_by_name_segment_coo
+		a = MerchantRepository.new('./data/merchants.csv')
+		actual = a.find_all_by_name("coo")
+		expected = ["JustReallyCoolStuff", "coolzish", "CoolArtPots"]
+
+		assert_equal expected, actual
+	end
+
+	def test_if_it_returns_correct_when_seeminly_nonsense_segment_is_passed
+		a = MerchantRepository.new('./data/merchants.csv')
+		actual = a.find_all_by_name("zzy")
+		expected = ["DizzyUnicornDesigns"]
+
+		assert_equal expected, actual
+	end
+
+	def test_if_it_returns_empty_array_when_passed_illegitimade_string_segment
+		a = MerchantRepository.new('./data/merchants.csv')
+		actual = a.find_all_by_name("az7")
+		expected = []
+
+		assert_equal expected, actual
+	end
 end
