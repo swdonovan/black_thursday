@@ -9,7 +9,7 @@ class MerchantRepository
 							:all
 
 	def initialize(merchant_info)
-		@contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
+		@contents = CSV.open merchant_info, headers: true, header_converters: :symbol
 		read_lines
 	end
 
@@ -30,7 +30,7 @@ class MerchantRepository
 	end
 
 	def find_by_id(id)
-		name = name.to_s
+		id = id.to_
 		merchant = nil
 		@all.map do |word|
 		 merchant = word if id == word.id
