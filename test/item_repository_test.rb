@@ -144,4 +144,49 @@ class ItemRepositoryTest < Minitest::Test
 
     assert_equal expected, actual
   end
+
+  def test_it_finds_all_by_price
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_all_by_price("1200")
+    actual = b[0].unit_price
+    expected = "1200"
+
+    assert_equal expected, actual
+  end
+
+  def test_it_finds_all_by_price_zero
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_all_by_price("0")
+    actual = b
+    expected = []
+
+    assert_equal expected, actual
+  end
+
+  def test_it_finds_all_by_price_2500
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_all_by_price("2500")
+    actual = b[0].unit_price
+    expected = "2500"
+
+    assert_equal expected, actual
+  end
+
+  def test_it_finds_all_by_price_3000
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_all_by_price("3000")
+    actual = b[0].name
+    expected = "Moyenne toile"
+
+    assert_equal expected, actual
+  end
+
+  def test_if_find_merchant_id
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_by_merchant_id("12334194")
+    actual = b.name
+    expected = "Superbe plastron tout en pâte polymère texturée"
+
+    assert_equal expected, actual
+  end
 end
