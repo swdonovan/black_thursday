@@ -42,7 +42,7 @@ class ItemRepositoryTest < Minitest::Test
   def test_it_finds_id
 		a = ItemRepository.new('./data/items.csv')
 		b = a.find_by_id("263395237")
-		expected = "263395237"
+		expected = 263395237
 		actual = b.id
 
 		assert_equal expected, actual
@@ -51,7 +51,7 @@ class ItemRepositoryTest < Minitest::Test
   def test_it_shows_changed_id_after_find_item_id
     a = ItemRepository.new('./data/items.csv')
     b = a.find_by_id("263567376")
-    expected = "263567376"
+    expected = 263567376
     actual = b.id
 
     assert_equal expected, actual
@@ -60,7 +60,7 @@ class ItemRepositoryTest < Minitest::Test
   def test_it_shows_id
     a = ItemRepository.new('./data/items.csv')
     b = a.find_by_id("263567242")
-    expected = "263567242"
+    expected = 263567242
     actual = b.id
 
     assert_equal expected, actual
@@ -106,7 +106,7 @@ class ItemRepositoryTest < Minitest::Test
     a = ItemRepository.new('./data/items.csv')
     b = a.find_all_with_description("soft drugs prejudices")
     actual = b[0].id if b[0] != nil
-    expected = "263402475"
+    expected = 263402475
 
     assert_equal expected, actual
   end
@@ -131,7 +131,7 @@ class ItemRepositoryTest < Minitest::Test
     a = ItemRepository.new('./data/items.csv')
     b = a.find_all_with_description("successful beer brands worldwide")
     actual = b[0].id
-    expected = "263451053"
+    expected = 263451053
 
     assert_equal expected, actual
   end
@@ -228,5 +228,4 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal 427, b.length
     assert_equal expected, actual
   end
-
 end

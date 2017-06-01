@@ -39,7 +39,7 @@ class SalesEngineTest < Minitest::Test
 		})
 		b = a.items.find_by_id("263395237")
 		actual = b.id
-		expected = "263395237"
+		expected = 263395237
 
 		assert_equal expected, actual
 	end
@@ -51,7 +51,7 @@ class SalesEngineTest < Minitest::Test
 		})
 		b = a.items.find_by_id("263567376")
 		actual = b.id
-		expected = "263567376"
+		expected = 263567376
 
 		assert_equal expected, actual
 	end
@@ -63,7 +63,7 @@ class SalesEngineTest < Minitest::Test
 		})
 		b = a.items.find_by_id("263567242")
 		actual = b.id
-		expected = "263567242"
+		expected = 263567242
 
 		assert_equal expected, actual
 	end
@@ -143,7 +143,7 @@ class SalesEngineTest < Minitest::Test
 		})
 		b = a.items.find_all_with_description("soft drugs prejudices")
 		actual = b[0].id if b[0] != nil
-    expected = "263402475"
+    expected = 263402475
 
     assert_equal expected, actual
 	end

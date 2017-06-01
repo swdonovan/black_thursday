@@ -35,7 +35,7 @@ class MerchantRepository
 	end
 
 	def find_by_id(id)
-		id = id.to_s
+		id = id.to_i
 		merchant = nil
 		@all.map do |word|
 		 merchant = word if id == word.id

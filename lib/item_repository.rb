@@ -21,7 +21,7 @@ class ItemRepository
   end
 
   def find_by_id(id)
-		id = id.to_s
+		id = id.to_i
 		item = nil
 		all.map do |word|
 		 item = word if id == word.id
@@ -52,7 +52,7 @@ class ItemRepository
   end
 
   def find_by_merchant_id(merchant_id)
-		merchant_id = merchant_id.to_s
+		merchant_id = merchant_id.to_i
 		item = []
 		all.map do |name|
 		  item = name if merchant_id == name.merchant_id

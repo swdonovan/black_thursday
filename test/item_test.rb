@@ -47,7 +47,7 @@ class ItemTest < Minitest::Test
   def test_it_shows_the_correct_id_when_passed_through
     a = Item.new({:name => "Tyler", :id => "1234", :description => nil,
       :unit_price => nil, :created_at => nil, :updated_at => nil, :merchant_id => nil})
-    expected = "1234"
+    expected = 1234
     actual = a.id
 
     assert_equal expected, actual
@@ -56,7 +56,7 @@ class ItemTest < Minitest::Test
   def test_it_shows_the_correct_id_when_passed_through_again
     a = Item.new({:name => "Tyler", :id => "5280", :description => nil,
       :unit_price => nil, :created_at => nil, :updated_at => nil, :merchant_id => nil})
-    expected = "5280"
+    expected = 5280
     actual = a.id
 
     assert_equal expected, actual
@@ -65,7 +65,7 @@ class ItemTest < Minitest::Test
   def test_it_shows_the_correct_id_when_passed_a_million
     a = Item.new({:name => "Tyler", :id => "a million", :description => nil,
       :unit_price => nil, :created_at => nil, :updated_at => nil, :merchant_id => nil})
-    expected = "a million"
+    expected = 0
     actual = a.id
 
     assert_equal expected, actual
@@ -76,12 +76,12 @@ class ItemTest < Minitest::Test
       :unit_price => "more than you can afford", :created_at => "now", :updated_at => "before", :merchant_id => "Prince symbol"})
 
     assert_equal "Tyler", a.name
-    assert_equal "a million", a.id
+    assert_equal 0, a.id
     assert_equal "Monster Spray", a.description
     assert_equal "more than you can afford", a.unit_price
     assert_equal "now", a.created_at
     assert_equal "before", a.updated_at
-    assert_equal "Prince symbol", a.merchant_id
+    assert_equal 0, a.merchant_id
   end
 
   def test_it_shows_the_right_information_passed_different_info
@@ -89,12 +89,12 @@ class ItemTest < Minitest::Test
       :unit_price => "40,000", :created_at => "Monday", :updated_at => "Tuesday", :merchant_id => "56843166496526862"})
 
     assert_equal "Bruce", a.name
-    assert_equal "685521578", a.id
+    assert_equal 685521578, a.id
     assert_equal "Not avaliable", a.description
     assert_equal "40,000", a.unit_price
     assert_equal "Monday", a.created_at
     assert_equal "Tuesday", a.updated_at
-    assert_equal "56843166496526862", a.merchant_id
+    assert_equal 56843166496526862, a.merchant_id
   end
 
   def test_unit_price_to_dollars_correctly_converts_to_float
