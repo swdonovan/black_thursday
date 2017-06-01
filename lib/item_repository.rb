@@ -45,7 +45,7 @@ class ItemRepository
 	end
 
   def find_all_by_price(amount)
-    choices = @all.select do |price|
+    choices = all.select do |price|
 			price.unit_price == amount
     end
     choices
@@ -54,10 +54,19 @@ class ItemRepository
   def find_by_merchant_id(merchant_id)
 		merchant_id = merchant_id.to_s
 		item = nil
-		@all.map do |name|
+		all.map do |name|
 		  item = name if merchant_id == name.merchant_id
 		end
 		return item
 	end
 
+  def find_all_by_price_in_range(start_range, end_range)
+    range = [*(start_range.to_s)..(end_range.to_s)]
+    choices = all.select do |price|
+      range.include?(price.unit_price)
+    end
+    choices.map do |line|
+      line
+    end
+  end
 end

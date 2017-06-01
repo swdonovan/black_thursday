@@ -189,4 +189,36 @@ class ItemRepositoryTest < Minitest::Test
 
     assert_equal expected, actual
   end
+
+  def test_it_finds_a_price_range
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_all_by_price_in_range(1199, 1201)
+    actual = b[0].name
+    expected = "510+ RealPush Icon Set"
+
+    assert_equal expected, actual
+  end
+
+  def test_it_finds_a_LARGE_price_range
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_all_by_price_in_range(2400000, 2600000)
+    actual = b[0].name
+    expected = "Original WWII Guinness Advertising Oil on Canvas Artwork by John Gilroy - 1944 Royal Navy Submarine Crew [ON8505]"
+
+    assert_equal expected, actual
+  end
+
+  def test_it_finds_a_large_group_by_price
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_all_by_price_in_range(2000, 5000)
+    first_name  = b[0].name
+    second_name = b[1].name
+    third_name  = b[2].name
+    actual = [first_name, second_name, third_name]
+    expected = ["Vogue Paris Original Givenchy 2307", "Wooden pen and stand", "HOT Crystal Dragon Fly Hand Blown Glass Art Gold Trim Figurine Lucky Collection"]
+
+    assert_equal 427, b.length
+    assert_equal expected, actual
+  end
+
 end
