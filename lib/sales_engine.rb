@@ -14,6 +14,7 @@ class SalesEngine
 	def self.from_csv(argv_values)
 		SalesEngine.new(argv_values)
 	end
+
 end
 
 # se = SalesEngine.from_csv({

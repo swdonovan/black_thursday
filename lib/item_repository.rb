@@ -55,7 +55,7 @@ class ItemRepository
 		merchant_id = merchant_id.to_i
 		item = []
 		all.map do |name|
-		  item = name if merchant_id == name.merchant_id
+		  item << name if merchant_id == name.merchant_id
 		end
 		return item
 	end

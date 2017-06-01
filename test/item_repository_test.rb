@@ -31,6 +31,17 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_it_shows_changed_id_after_fnd_merch_id
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_by_merchant_id("12334185")
+    actual = b[0].name
+    # binding.pry
+    expected = "Glitter scrabble frames"
+
+    assert_equal expected, actual
+    assert_equal 6, b.length
+  end
+
   def test_it_shows_changed_id_after_find_merch_id
 		a = ItemRepository.new('./data/items.csv')
 		b = a.find_by_id("12337411")
@@ -184,10 +195,14 @@ class ItemRepositoryTest < Minitest::Test
   def test_if_find_merchant_id
     a = ItemRepository.new('./data/items.csv')
     b = a.find_by_merchant_id("12334194")
-    actual = b.name
-    expected = "Superbe plastron tout en pâte polymère texturée"
+    actual = b[0].name
+    expected = "Boucles d&#39;oreilles en pâte polymère texturée - Argent 925/1000"
+    other_expected = "Jolies boucles d&#39;oreilles en pâte polymère et cuir façonnées à la main"
+    last_expected = "Belles boucles d&#39;oreilles géométriques très tendance en pâte polymère texturée."
 
-    assert_equal expected, actual
+    assert_equal other_expected, b[1].name
+    assert_equal last_expected, b[2].name
+    assert_equal 7, b.length
   end
 
   def test_if_find_merchant_id_returns_nil_array
@@ -208,6 +223,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_finds_a_LARGE_price_range
+    skip
     a = ItemRepository.new('./data/items.csv')
     b = a.find_all_by_price_in_range(2400000, 2600000)
     actual = b[0].name

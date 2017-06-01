@@ -44,6 +44,18 @@ class SalesEngineTest < Minitest::Test
 		assert_equal expected, actual
 	end
 
+	def test_items_methods_pass_through
+		a = SalesEngine.from_csv({
+		  :items     => "data/items.csv",
+		  :merchants => "data/merchants.csv"
+		})
+		b = a.items.find_by_id("263395237")
+		actual = b.name
+		expected = "510+ RealPush Icon Set"
+
+		assert_equal expected, actual
+	end
+
 	def test_items_methods_pass_through_dif_id
 		a = SalesEngine.from_csv({
 		  :items     => ARGV[0],
@@ -84,7 +96,7 @@ class SalesEngineTest < Minitest::Test
 			:items     => ARGV[0],
 			:merchants => ARGV[1],
 		})
-		b = a.items.find_by_id("1")
+		b = a.items.find_by_id(12334112)
 		actual = b
 
 		assert_nil actual
@@ -190,10 +202,11 @@ class SalesEngineTest < Minitest::Test
 			:merchants => ARGV[1],
 		})
 		b = a.items.find_by_merchant_id("12334194")
-    actual = b.name
-    expected = "Superbe plastron tout en pâte polymère texturée"
+    actual = b[0].name
+    expected = "Boucles d&#39;oreilles en pâte polymère texturée - Argent 925/1000"
 
     assert_equal expected, actual
+		assert_equal 7, b.length
 	end
 
 	def test_items_methods_pass_through_for_merchant_id_nil
@@ -256,4 +269,66 @@ class SalesEngineTest < Minitest::Test
 
 		assert_nil actual
 	end
+
+	def test_merchant_methods_pass_through_for_find_by_id
+		a = SalesEngine.from_csv({
+			:items     => ARGV[0],
+			:merchants => ARGV[1],
+		})
+		b = a.merchants.find_by_id(12337411)
+		actual = b.name
+		expected = "CJsDecor"
+
+		assert_equal expected, actual
+	end
+
+	def test_merchant_methods_pass_through_for_find_with_id
+		a = SalesEngine.from_csv({
+		  :items     => "data/items.csv",
+		  :merchants => "data/merchants.csv"
+		})
+		b = a.merchants.find_by_id(12337411)
+		actual = b.name
+		expected = "CJsDecor"
+
+		assert_equal expected, actual
+	end
+
+	def test_merchant_methods_pass_through_for_find_id_instance
+		a = SalesEngine.from_csv({
+		  :items     => "data/items.csv",
+		  :merchants => "data/merchants.csv"
+		})
+		b = a.merchants.find_by_id(12334843)
+		actual = b.name
+		expected = "TeriTrendyTreasures"
+
+		assert_equal expected, actual
+	end
+
+	def test_merchant_methods_pass_through_for_find_id_specific
+		a = SalesEngine.from_csv({
+		  :items     => "data/items.csv",
+		  :merchants => "data/merchants.csv"
+		})
+		b = a.merchants.find_by_id(1)
+		actual = b
+
+
+		assert_nil actual
+	end
+
+	def test_merch_find_id_then_finds_items_for_that_merchant
+		skip
+		a = SalesEngine.from_csv({
+		  :items     => "data/items.csv",
+		  :merchants => "data/merchants.csv"
+		})
+		b = a.merchants.find_by_id(12334141)
+		actual = b.items
+		expected = []
+
+		assert_equal expected, actual
+	end
+
 end
