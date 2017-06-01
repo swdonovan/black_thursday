@@ -136,7 +136,7 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal expected, actual
   end
 
-  def test_it_searches_partial_description_if_you_believe_us
+  def test_it_searches_partial_description_if_you_can_believe_it
     a = ItemRepository.new('./data/items.csv')
     b = a.find_all_with_description("man on the moon")
     actual = b
@@ -190,6 +190,14 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_if_find_merchant_id_returns_nil_array
+    a = ItemRepository.new('./data/items.csv')
+    b = a.find_by_merchant_id("1")
+    actual = b
+    expected = []
+
+    assert_equal expected, actual
+  end
   def test_it_finds_a_price_range
     a = ItemRepository.new('./data/items.csv')
     b = a.find_all_by_price_in_range(1199, 1201)

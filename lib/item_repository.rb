@@ -53,7 +53,7 @@ class ItemRepository
 
   def find_by_merchant_id(merchant_id)
 		merchant_id = merchant_id.to_s
-		item = nil
+		item = []
 		all.map do |name|
 		  item = name if merchant_id == name.merchant_id
 		end
