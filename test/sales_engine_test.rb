@@ -234,4 +234,26 @@ class SalesEngineTest < Minitest::Test
 
 		assert_equal expected, actual
 	end
+
+	def test_merchants_methods_pass_through_for_find_by_name
+		a = SalesEngine.from_csv({
+			:items     => ARGV[0],
+			:merchants => ARGV[1],
+		})
+		b = a.merchants.find_by_name("GoldenRayPress")
+		actual = b.name
+		expected = "GoldenRayPress"
+
+		assert_equal expected, actual
+	end
+
+	def test_merchants_methods_pass_through_for_find_by_name_nil
+		a = SalesEngine.from_csv({
+			:items     => ARGV[0],
+			:merchants => ARGV[1],
+		})
+		actual = a.merchants.find_by_name("Craigers")
+
+		assert_nil actual
+	end
 end
