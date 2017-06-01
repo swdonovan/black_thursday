@@ -7,14 +7,21 @@ class SalesEngine
 							:items
 
 	def initialize(argv_values)
-		@merchants = MerchantRepository.new(argv_values[:merchants])
-		@items = ItemRepository.new(argv_values[:items])
+		@merchants = MerchantRepository.new(argv_values[:merchants], self)
+		@items = ItemRepository.new(argv_values[:items], self)
 	end
 
 	def self.from_csv(argv_values)
 		SalesEngine.new(argv_values)
 	end
 
+	def find_items_by_merchant_id(id)
+		@items.find_all_by_merchant_id(id)
+	end
+
+	def find_merchant_by_item_id(id)
+    @merchants.find_by_id(id)
+	end
 end
 
 # se = SalesEngine.from_csv({

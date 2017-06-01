@@ -1,13 +1,15 @@
 require 'pry'
 require 'csv'
 require_relative 'item'
+require_relative 'sales_engine'
 
 class ItemRepository
 
   attr_reader :contents,
               :all
 
-  def initialize(item_info)
+  def initialize(item_info, se = SalesEngine)
+    @se = se
 		@contents = CSV.open item_info, headers: true, header_converters: :symbol
     read_lines
 	end
@@ -15,7 +17,7 @@ class ItemRepository
   def read_lines
     @all = @contents.map do |row|
       Item.new({:name => row[1], :id => row[0], :description => row[2],
-        :unit_price => row[3], :created_at => row[5], :updated_at => row[6], :merchant_id => row[4]})
+        :unit_price => row[3], :created_at => row[5], :updated_at => row[6], :merchant_id => row[4]}, self)
     end
     return all
   end
@@ -23,8 +25,8 @@ class ItemRepository
   def find_by_id(id)
 		id = id.to_i
 		item = nil
-		all.map do |word|
-		 item = word if id == word.id
+		all.map do |instance|
+		 item = instance if id == instance.id
 		end
 		return item
 	end
@@ -39,25 +41,24 @@ class ItemRepository
   end
 
   def find_all_with_description(segment)
-		choices = all.select do |item|
+		@all.select do |item|
 			item.description.upcase.include?(segment.upcase)
 		end
 	end
 
   def find_all_by_price(amount)
-    choices = all.select do |price|
+    @all.select do |price|
 			price.unit_price == amount
     end
-    choices
   end
 
-  def find_by_merchant_id(merchant_id)
-		merchant_id = merchant_id.to_i
-		item = []
-		all.map do |name|
-		  item << name if merchant_id == name.merchant_id
+  def find_all_by_merchant_id(merchant_id)
+		# merchant_id = merchant_id.to_i
+		# item = []
+		all.find_all do |item|
+		  item.merchant_id == merchant_id.to_i
 		end
-		return item
+		# return item
 	end
 
   def find_all_by_price_in_range(start_range, end_range)
@@ -68,5 +69,9 @@ class ItemRepository
     choices.map do |line|
       line
     end
+  end
+
+  def pass_to_se(id)
+    @se.find_merchant_by_item_id(id)
   end
 end

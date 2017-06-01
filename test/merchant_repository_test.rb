@@ -118,6 +118,15 @@ class MerchantRepositoryTest < Minitest::Test
 		assert_equal expected, actual
 	end
 
+	def test_it_shows_changed_id_after_find_merch_id_again
+		a = MerchantRepository.new('./data/merchants.csv')
+		b = a.find_by_id("12337411")
+		expected = 12337411
+		actual = b.id
+
+		assert_equal expected, actual
+	end
+
 	def test_all_shows_all_instances
 		a = MerchantRepository.new('./data/merchants.csv')
 		expected = 475

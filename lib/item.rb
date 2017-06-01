@@ -10,7 +10,8 @@ class Item
               :updated_at,
               :merchant_id
 
-  def initialize(item_info)
+  def initialize(item_info, ir = ItemRepository)
+    @ir          = ir
     @name        = item_info[:name]
     @id          = item_info[:id].to_i
     @description = item_info[:description]
@@ -23,4 +24,11 @@ class Item
   def unit_price_to_dollars
     @unit_price.to_f.round(2)
   end
+
+  def merchant
+    @ir.pass_to_se(merchant_id)
+  end
+
+  # def saomething
+  #   @ir.
 end

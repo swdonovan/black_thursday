@@ -7,6 +7,11 @@ require 'pry'
 
 class SalesEngineTest < Minitest::Test
 
+	# def setup
+	# 	@data1 = {}
+	#
+	# end
+
 	def test_sales_engine_inits
 		actual = SalesEngine.from_csv({
 		  :items     => "data/items.csv",
@@ -201,7 +206,7 @@ class SalesEngineTest < Minitest::Test
 			:items     => ARGV[0],
 			:merchants => ARGV[1],
 		})
-		b = a.items.find_by_merchant_id("12334194")
+		b = a.items.find_all_by_merchant_id("12334194")
     actual = b[0].name
     expected = "Boucles d&#39;oreilles en pâte polymère texturée - Argent 925/1000"
 
@@ -214,7 +219,7 @@ class SalesEngineTest < Minitest::Test
 			:items     => ARGV[0],
 			:merchants => ARGV[1],
 		})
-		b = a.items.find_by_merchant_id("1")
+		b = a.items.find_all_by_merchant_id("1")
 		actual = b
 		expected = []
 
@@ -319,16 +324,52 @@ class SalesEngineTest < Minitest::Test
 	end
 
 	def test_merch_find_id_then_finds_items_for_that_merchant
-		skip
 		a = SalesEngine.from_csv({
 		  :items     => "data/items.csv",
 		  :merchants => "data/merchants.csv"
 		})
 		b = a.merchants.find_by_id(12334141)
-		actual = b.items
-		expected = []
+		actual = b.items.length
+		expected = 1
 
 		assert_equal expected, actual
 	end
 
+	def test_merch_find_id_then_finds_items_for_that_merchant_again
+		a = SalesEngine.from_csv({
+		  :items     => "data/items.csv",
+		  :merchants => "data/merchants.csv"
+		})
+		b = a.merchants.find_by_id(12334194)
+		actual = b.items[1].name
+		expected = "Jolies boucles d&#39;oreilles en pâte polymère et cuir façonnées à la main"
+
+		assert_equal "Lnjewelscreation", b.name
+		assert_equal expected, actual
+	  assert_equal 7, b.items.length
+	end
+
+	def test_item_find_id_then_finds_merchant_id
+		a = SalesEngine.from_csv({
+			:items     => "data/items.csv",
+			:merchants => "data/merchants.csv"
+		})
+		b = a.items.find_by_id(263395237)
+		actual = b.merchant.name
+		expected = "jejum"
+
+		assert_equal expected, actual
+  end
+
+	def test_item_find_id_then_finds_merchant_id_again
+		a = SalesEngine.from_csv({
+			:items     => "data/items.csv",
+			:merchants => "data/merchants.csv"
+		})
+		b = a.items.find_by_id(263397201)
+		actual = b.merchant.name
+		expected = "WellnessNeelsen"
+
+		assert_equal expected, actual
+  end
 end
