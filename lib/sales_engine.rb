@@ -1,17 +1,27 @@
 require_relative 'merchant_repository'
+require_relative 'item_repository'
 require 'pry'
 #
 class SalesEngine
+	attr_reader :merchants,
+							:items
+
+	def initialize(argv_values)
+		@merchants = MerchantRepository.new(argv_values[:merchants])
+		@items = ItemRepository.new(argv_values[:items])
+	end
 
 	def self.from_csv(argv_values)
-		@merchants = argv_values[:merchants]
-		@items = argv_values[:items]
+		SalesEngine.new(argv_values)
 	end
 
-	def merchants
-		binding.pry
-		MerchantRepository.new(@merchants)
-	end
+	# def merchants
+	# 	MerchantRepository.new(merchants)
+	# end
+	#
+	# def items
+	# 	ItemRepository.new(items)
+	# end
 end
 
 # se = SalesEngine.from_csv({
