@@ -7,6 +7,6 @@ class Merchant
 
 	def initialize(merch_info)
 		@name = merch_info[:name]
-		@id   = merch_info[:id]
+		@id   = merch_info[:id].to_i
 	end
 end
