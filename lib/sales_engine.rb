@@ -29,5 +29,22 @@ se = SalesEngine.from_csv({
 	:merchants => ARGV[1],
 })
 
-merchant = se.merchants.find_by_id(12334112)
-puts merchant.name
+merchant = se.merchants.all
+item = se.items.all
+
+def find_average(merchant)
+	top = setup_average(merchant).inject(0) {|sum, instance| sum + instance.length}
+	bottom = setup_average(merchant).length
+	average = top.to_f / bottom.to_f
+	average.round(2)
+end
+
+def setup_average(merchant)
+	all_merchants = []
+		merchant.map do |merch|
+			all_merchants << merch.items
+		end
+	all_merchants
+end
+
+puts "the average number of items per merchant is #{find_average(merchant)}"
