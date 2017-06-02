@@ -1,12 +1,12 @@
 require 'pry'
 require 'csv'
 require_relative 'item'
-require_relative 'sales_engine'
 
 class ItemRepository
 
   attr_reader :contents,
-              :all
+              :all,
+              :se
 
   def initialize(item_info, se = SalesEngine)
     @se = se
@@ -72,6 +72,6 @@ class ItemRepository
   end
 
   def pass_to_se(id)
-    @se.find_merchant_by_item_id(id)
+    se.find_merchant_by_item_id(id)
   end
 end

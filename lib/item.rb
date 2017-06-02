@@ -1,4 +1,5 @@
 require 'csv'
+require_relative 'item_repository'
 
 class Item
 
@@ -8,7 +9,8 @@ class Item
               :unit_price,
               :created_at,
               :updated_at,
-              :merchant_id
+              :merchant_id,
+              :ir
 
   def initialize(item_info, ir = ItemRepository)
     @ir          = ir
@@ -26,7 +28,7 @@ class Item
   end
 
   def merchant
-    @ir.pass_to_se(merchant_id)
+    ir.pass_to_se(merchant_id)
   end
 
   # def saomething
