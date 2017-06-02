@@ -20,13 +20,13 @@ class MerchantTest < Minitest::Test
 		a = Merchant.new({:id => nil, :name => nil})
 		actual = a.id
 
-		assert_nil actual
+		assert_equal 0, actual
 		assert_nil a.name
 	end
 
 	def test_shows_correct_id_again
 		a = Merchant.new({:id => "123", :name => "Pablo"})
-		expected = "123"
+		expected = 123
 		actual = a.id
 
 		assert_equal expected, actual
@@ -35,7 +35,7 @@ class MerchantTest < Minitest::Test
 
 	def test_shows_correct_id_still
 		a = Merchant.new({:id => "9923123", :name => "Pablo's brother Jake"})
-		expected = "9923123"
+		expected = 9923123
 		actual = a.id
 
 		assert_equal expected, actual
@@ -44,7 +44,7 @@ class MerchantTest < Minitest::Test
 
 	def test_shows_correct_id_one_more_time
 		a = Merchant.new({:id => "169", :name => "Chen"})
-		expected = "169"
+		expected = 169
 		actual = a.id
 
 		assert_equal expected, actual
@@ -53,7 +53,7 @@ class MerchantTest < Minitest::Test
 
 	def test_shows_correct_id_jk_still_gots_another
 		a = Merchant.new({:id => "a million", :name => "a billion"})
-		expected = "a million"
+		expected = 0
 		actual = a.id
 
 		assert_equal expected, actual
