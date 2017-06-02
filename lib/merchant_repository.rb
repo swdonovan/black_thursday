@@ -1,18 +1,17 @@
 require 'pry'
 require 'csv'
 require_relative 'merchant'
-require_relative 'sales_engine'
-
-# For initial setup commit
 
 class MerchantRepository
 	attr_reader :name,
 							:id,
 							:contents,
-							:all
+							:all,
+							:se
 
 	def initialize(merchant_info, se = SalesEngine)
     @se = se
+		@all = all
 		open_file(merchant_info)
 		read_lines
 	end
@@ -56,6 +55,6 @@ class MerchantRepository
 	end
 
 	def pass_to_se(id)
-		@se.find_items_by_merchant_id(id)
+		se.find_items_by_merchant_id(id)
 	end
 end
