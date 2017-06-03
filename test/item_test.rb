@@ -94,6 +94,7 @@ class ItemTest < Minitest::Test
     assert_equal "Not avaliable", a.description
     assert_instance_of BigDecimal, a.unit_price
     assert_equal 40.0, a.unit_price.to_f
+    assert_equal 41.0, (a.unit_price + 1)
     assert_equal "Monday", a.created_at
     assert_equal "Tuesday", a.updated_at
     assert_equal 56843166496526862, a.merchant_id

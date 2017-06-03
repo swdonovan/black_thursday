@@ -61,13 +61,11 @@ end
 
 	def test_it_finds_average_price_per_item
 		sa = SalesAnalyst.new(@sales_engine)
-		joey = sa.average_item_price_for_merchant(12334195)
-		actual = (joey[0].unit_price_to_dollars) / 100
-		expected = 149.00
+		actual = sa.average_item_price_for_merchant(12334195)
+		expected = 44983.33
 
-		assert_equal expected, actual
-		# assert_instance_of BigDecimal, actual.class
-		# assert_equal 12.33, actual.to_f
+		assert_equal expected, actual.to_f.round(2)
+		assert_instance_of BigDecimal, actual
 	end
 
 
