@@ -7,9 +7,16 @@ class SalesAnalystTest < Minitest::Test
 
 def setup
 	@sales_engine = SalesEngine.from_csv({
-	  :items     => ARGV[0],
-	  :merchants => ARGV[1],
+	  :items     => './test/data/items_fixture.csv',
+	  :merchants => './data/merchants.csv',
 	})
+	@sales_engine_dos = SalesEngine.from_csv({
+		:items     => './data/items.csv',
+		:merchants => './data/merchants.csv',
+		})
+end
+
+def setup_dos
 end
 
 	def test_sales_analyst_inits
@@ -20,24 +27,33 @@ end
 	end
 
 	def test_it_passes_through_sales_engine
-		skip # Unskip if running with official merchant.csv as argv[1]
+		 # Unskip if running with official merchant.csv as argv[1]
 		sa = SalesAnalyst.new(@sales_engine)
-		merchant = sa.se.merchants.find_by_id(12334194)
+		merchant = sa.se.merchants.find_by_id(12334195)
 		actual = merchant.items[1].name
-		expected = "Jolies boucles d&#39;oreilles en pâte polymère et cuir façonnées à la main"
+		expected = "Course contre la montre"
 
-		assert_equal 7, merchant.items.length
+		assert_equal 12, merchant.items.length
 		assert_equal expected, actual
 	end
 
 	def test_average_items_per_merch_works
 		#unskip if running with merchant_fixture.csv as ARGV[1]
-		sa = SalesAnalyst.new(@sales_engine)
+		sa = SalesAnalyst.new(@sales_engine_dos)
 		actual = sa.average_items_per_merchant
 		expected = 2.88
 
 		assert_equal expected, actual
 	end
+
+	def test_it_can_find_standard_deviation_with_fixture
+			#0.09
+			sa = SalesAnalyst.new(@sales_engine_dos)
+			actual = sa.average_items_per_merchant_standard_deviation
+
+			assert_equal 3.26, actual
+	end
+
 
 
 end

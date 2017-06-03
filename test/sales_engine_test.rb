@@ -231,14 +231,11 @@ class SalesEngineTest < Minitest::Test
 			:items     => ARGV[0],
 			:merchants => ARGV[1],
 		})
-		b = a.items.find_all_by_price_in_range(2000, 5000)
-    first_name  = b[0].name
-    second_name = b[1].name
-    third_name  = b[2].name
-    actual = [first_name, second_name, third_name]
-    expected = ["Vogue Paris Original Givenchy 2307", "Wooden pen and stand", "HOT Crystal Dragon Fly Hand Blown Glass Art Gold Trim Figurine Lucky Collection"]
+		b = a.items.find_all_by_price_in_range(2000..3000)
+    actual = [(b[0].name), (b[1].name), (b[3].name), (b[4].name), (b[5].name)]
+    expected = ["INFRAROUGE", "Plato Botanero Halcon Milenario hecho en nogal de 2 pulgadas de grosor", "Bibliothèque CACTUS", "Hope number 2", "Little Round Paua Abalone Stud Earrings"]
 
-    assert_equal 427, b.length
+    assert_equal 6, b.length
     assert_equal expected, actual
 	end
 
@@ -247,10 +244,12 @@ class SalesEngineTest < Minitest::Test
 			:items     => ARGV[0],
 			:merchants => ARGV[1],
 		})
-		actual = a.items.find_all_by_price_in_range(1, 2)
-		expected = []
+		b = a.items.find_all_by_price_in_range(1..2)
+		actual = b[0].name
+		expected = "Custom LEGO Alien Minion - INSTRUCTIONS ONLY"
 
 		assert_equal expected, actual
+		assert_equal 10, b.length
 	end
 
 	def test_merchants_methods_pass_through_for_find_by_name

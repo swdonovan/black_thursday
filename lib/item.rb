@@ -1,5 +1,5 @@
 require 'csv'
-require_relative 'item_repository'
+
 
 class Item
 
@@ -12,7 +12,7 @@ class Item
               :merchant_id,
               :ir
 
-  def initialize(item_info, ir = ItemRepository)
+  def initialize(item_info, ir)
     @ir          = ir
     @name        = item_info[:name]
     @id          = item_info[:id].to_i

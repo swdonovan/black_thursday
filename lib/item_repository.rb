@@ -8,7 +8,7 @@ class ItemRepository
               :all,
               :se
 
-  def initialize(item_info, se = SalesEngine)
+  def initialize(item_info, se  )
     @se = se
 		@contents = CSV.open item_info, headers: true, header_converters: :symbol
     read_lines
@@ -53,22 +53,24 @@ class ItemRepository
   end
 
   def find_all_by_merchant_id(merchant_id)
-		# merchant_id = merchant_id.to_i
-		# item = []
 		all.find_all do |item|
 		  item.merchant_id == merchant_id.to_i
 		end
-		# return item
 	end
 
-  def find_all_by_price_in_range(start_range, end_range)
-    range = [*(start_range.to_s)..(end_range.to_s)]
+  def find_all_by_price_in_range(range)
+    range = convert_range(range)
     choices = all.select do |price|
-      range.include?(price.unit_price)
+      range.include?(price.unit_price.to_i)
     end
-    choices.map do |line|
-      line
-    end
+    # # choices.map do |line|
+    # #   line
+    # end
+  end
+
+  def convert_range(range)
+    range = range.to_s.split("..")
+    range = [*((range[0].to_f)*100).to_i..((range[1].to_f)*100).to_i]
   end
 
   def pass_to_se(id)

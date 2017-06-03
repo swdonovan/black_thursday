@@ -9,9 +9,8 @@ class MerchantRepository
 							:all,
 							:se
 
-	def initialize(merchant_info, se = SalesEngine)
+	def initialize(merchant_info, se)
     @se = se
-		@all = all
 		open_file(merchant_info)
 		read_lines
 	end
@@ -55,6 +54,6 @@ class MerchantRepository
 	end
 
 	def pass_to_se(id)
-		se.find_items_by_merchant_id(id)
+		@se.find_items_by_merchant_id(id)
 	end
 end
