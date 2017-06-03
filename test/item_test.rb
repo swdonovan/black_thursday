@@ -78,7 +78,8 @@ class ItemTest < Minitest::Test
     assert_equal "Tyler", a.name
     assert_equal 0, a.id
     assert_equal "Monster Spray", a.description
-    assert_equal "more than you can afford", a.unit_price
+    assert_instance_of BigDecimal, a.unit_price
+    assert_equal 0.0,  a.unit_price.to_f
     assert_equal "now", a.created_at
     assert_equal "before", a.updated_at
     assert_equal 0, a.merchant_id
@@ -91,7 +92,8 @@ class ItemTest < Minitest::Test
     assert_equal "Bruce", a.name
     assert_equal 685521578, a.id
     assert_equal "Not avaliable", a.description
-    assert_equal "40,000", a.unit_price
+    assert_instance_of BigDecimal, a.unit_price
+    assert_equal 40.0, a.unit_price.to_f
     assert_equal "Monday", a.created_at
     assert_equal "Tuesday", a.updated_at
     assert_equal 56843166496526862, a.merchant_id

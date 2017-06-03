@@ -9,7 +9,6 @@ class SalesAnalyst
 	end
 
 	def average_items_per_merchant
-		# binding.pry
 		all_merchants = se.merchants.all
 		find_average(all_merchants)
 	end
@@ -43,8 +42,31 @@ class SalesAnalyst
 		st_dev = setup.inject(0) do |sum, instance|
 			sum + ((instance.length - average)**2)
 		end
-		st_dev = Math.sqrt(st_dev / setup.length)
+		st_dev = Math.sqrt(st_dev / (setup.length - 1))
 		st_dev.round(2)
+	end
+
+	def merchants_with_high_item_count
+		st_d = average_items_per_merchant_standard_deviation
+		all_merchants = se.merchants.all
+		setup = setup_average_instance(all_merchants)
+		find_high_item_merchants(st_d, setup)
+	end
+
+	def find_high_item_merchants(st_d, setup)
+		merchants = []
+		setup.select do |merchant|
+			merchants << merchant.name if merchant.items.length >= st_d
+		end
+		merchants
+	end
+
+	def setup_average_instance(all_merchants)
+		merchants = []
+		all_merchants.map do |merch|
+			merchants << merch
+		end
+		merchants
 	end
 
 end

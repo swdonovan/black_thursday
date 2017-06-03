@@ -63,9 +63,6 @@ class ItemRepository
     choices = all.select do |price|
       range.include?(price.unit_price.to_i)
     end
-    # # choices.map do |line|
-    # #   line
-    # end
   end
 
   def convert_range(range)

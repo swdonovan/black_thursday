@@ -16,9 +16,6 @@ def setup
 		})
 end
 
-def setup_dos
-end
-
 	def test_sales_analyst_inits
 		sa = SalesAnalyst.new(@sales_engine)
 
@@ -48,12 +45,24 @@ end
 
 	def test_it_can_find_standard_deviation_with_fixture
 			#0.09
-			sa = SalesAnalyst.new(@sales_engine_dos)
-			actual = sa.average_items_per_merchant_standard_deviation
+		sa = SalesAnalyst.new(@sales_engine_dos)
+		actual = sa.average_items_per_merchant_standard_deviation
 
-			assert_equal 3.26, actual
+		assert_equal 3.26, actual
 	end
 
+	def test_it_can_find_merchants_with_high_item_count
+		sa = SalesAnalyst.new(@sales_engine)
+		actual = sa.merchants_with_high_item_count
+		expected = ["Shopin1901", "MiniatureBikez", "jejum", "BowlsByChris", "handicraftcallery", "Madewithgitterxx", "FlavienCouche", "BloominScents", "MuttisStrickwaren", "WellnessNeelsen", "Woodenpenshop", "TheAssemblyRooms", "SLHandmades", "Soudoveshop", "dansoilpaintings", "2MAKERSMARKET", "WoodleyShop", "Jesuisunponey", "Witoldart", "IOleynikova", "leaburrot", "ExecutiveGiftShoppe"]
+
+		assert_equal expected, actual
+	end
+
+	def test_it_finds_average_price_per_item
+		sa = SalesAnalyst.new(@sales_engine)
+		actual = sa.merchants
+	end
 
 
 end
