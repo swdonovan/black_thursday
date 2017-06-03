@@ -166,8 +166,8 @@ class ItemRepositoryTest < Minitest::Test
   def test_it_finds_all_by_price
     a = setup
     b = a.find_all_by_price("1200")
-    actual = b[0].unit_price
-    expected = "1200"
+    actual = b[0].unit_price_to_dollars
+    expected = 1200.0
 
     assert_equal expected, actual
   end
@@ -184,8 +184,8 @@ class ItemRepositoryTest < Minitest::Test
   def test_it_finds_all_by_price_2500
     a = setup
     b = a.find_all_by_price("2500")
-    actual = b[0].unit_price
-    expected = "2500"
+    actual = b[0].unit_price_to_dollars
+    expected = 2500.0
 
     assert_equal expected, actual
   end

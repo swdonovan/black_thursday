@@ -47,8 +47,9 @@ class ItemRepository
 	end
 
   def find_all_by_price(amount)
+    new_amount = amount.to_f
     @all.select do |price|
-			price.unit_price == amount
+			price.unit_price_to_dollars == new_amount
     end
   end
 
@@ -61,7 +62,7 @@ class ItemRepository
   def find_all_by_price_in_range(range)
     range = convert_range(range)
     choices = all.select do |price|
-      range.include?(price.unit_price.to_i)
+      range.include?(price.unit_price_to_dollars.to_i)
     end
   end
 

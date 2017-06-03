@@ -171,8 +171,8 @@ class SalesEngineTest < Minitest::Test
 			:merchants => ARGV[1],
 		})
 		b = a.items.find_all_by_price("1200")
-    actual = b[0].unit_price
-    expected = "1200"
+    actual = b[0].unit_price_to_dollars
+    expected = 1200.0
 
     assert_equal expected, actual
 	end
