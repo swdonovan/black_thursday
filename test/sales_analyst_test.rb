@@ -27,11 +27,12 @@ end
 		 # Unskip if running with official merchant.csv as argv[1]
 		sa = SalesAnalyst.new(@sales_engine)
 		merchant = sa.se.merchants.find_by_id(12334195)
-		actual = merchant.items[1].name
+		actual = merchant.items[1]
 		expected = "Course contre la montre"
 
 		assert_equal 12, merchant.items.length
-		assert_equal expected, actual
+		assert_equal expected, actual.name
+		assert_instance_of Item, actual
 	end
 
 	def test_average_items_per_merch_works
@@ -43,7 +44,7 @@ end
 		assert_equal expected, actual
 	end
 
-	def test_it_can_find_standard_deviation_with_fixture
+	def test_it_can_find_standard_deviation_without_fixture
 			#0.09
 		sa = SalesAnalyst.new(@sales_engine_dos)
 		actual = sa.average_items_per_merchant_standard_deviation
@@ -102,5 +103,17 @@ end
 
 		assert_equal expected, actual.to_f.round(2)
 		assert_instance_of BigDecimal, actual
+	end
+
+	def test_it_finds_golden_items_which_are_more_than_2_st_dev_away
+		sa = SalesAnalyst.new(@sales_engine)
+    actual = sa.golden_items
+		expected = "Course contre la montre"
+
+		assert_equal expected, actual[0].name
+		assert_instance_of Array, actual
+		assert_instance_of Item, actual[0]
+		assert_equal "Introspection virginalle", actual[1].name
+		assert_equal "Les raisons", actual[6].name
 	end
 end

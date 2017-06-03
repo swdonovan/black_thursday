@@ -74,7 +74,7 @@ class SalesAnalyst
 	end
 
 	def find_numerator(items)
-		items.inject(0) {|sum, price| sum + price.unit_price}
+		items.inject(0) {|sum, item| sum + item.unit_price}
 	end
 
 	def find_denominator(items)
@@ -94,8 +94,49 @@ class SalesAnalyst
 			sum + average_item_price_for_merchant(merch.id)
 		end
 	end
-end
 
+	def golden_items
+		all_items = se.items.all
+		average = find_average_price(all_items)
+		st_d = average_price_per_item_standard_deviation(average, all_items)
+		find_golden_items(st_d, all_items, average)
+	end
+
+	def average_price_per_item_standard_deviation(average, all_items)
+		standard_deviation_price_computation(all_items, average)
+	end
+
+	def standard_deviation_price_computation(setup, average)
+		st_dev = setup.inject(0) do |sum, instance|
+			sum + ((instance.unit_price_to_dollars - average)**2)
+		end
+		st_dev = Math.sqrt(st_dev / (setup.length - 1))
+		st_dev.round(2)
+	end
+
+	def find_average_price(all_items)
+		average = find_price_numerator(all_items).to_f / find_denominator(all_items).to_f
+		average.round(2)
+	end
+
+	def find_price_numerator(items)
+		items.inject(0) {|sum, item| sum + item.unit_price_to_dollars}
+	end
+
+	def find_golden_items(st_d, setup, average)
+		# find_2_standard_deviations_price_difference(average, standard_deviation)
+		golden_items = []
+		setup.select do |item|
+			golden_items << item if item.unit_price_to_dollars >= (((st_d - average)*2) + average)
+		end
+		golden_items
+	end
+
+	# def find_2_standard_deviations_price_difference
+	# 	sta
+	# end
+
+end
 # se = SalesEngine.from_csv({
 #   :items     => ARGV[0],
 #   :merchants => ARGV[1],
