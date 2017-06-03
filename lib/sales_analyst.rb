@@ -127,7 +127,7 @@ class SalesAnalyst
 		# find_2_standard_deviations_price_difference(average, standard_deviation)
 		golden_items = []
 		setup.select do |item|
-			golden_items << item if item.unit_price_to_dollars >= (((st_d - average)*2) + average)
+			golden_items << item if item.unit_price_to_dollars > (((st_d - average)*2) + average)
 		end
 		golden_items
 	end

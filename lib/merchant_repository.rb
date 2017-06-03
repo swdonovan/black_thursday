@@ -1,4 +1,4 @@
-require 'pry'
+# require 'pry'
 require 'csv'
 require_relative 'merchant'
 
@@ -14,6 +14,10 @@ class MerchantRepository
 		open_file(merchant_info)
 		read_lines
 	end
+
+	# def inspect
+  #   "#<#{self.class} #{@merchants.size} rows>"
+  # end
 
 	def open_file(merchant_info)
 		@contents = CSV.open merchant_info, headers: true, header_converters: :symbol
