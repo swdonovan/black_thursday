@@ -68,7 +68,7 @@ class ItemRepository
 
   def convert_range(range)
     range = range.to_s.split("..")
-    range = [*((range[0].to_f)*100).to_i..((range[1].to_f)*100).to_i]
+    range = [*((range[0].to_f)).to_i..((range[1].to_f)).to_i]
   end
 
   def pass_to_se(id)

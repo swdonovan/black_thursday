@@ -54,6 +54,6 @@ class MerchantRepository
 	end
 
 	def pass_to_se(id)
-		@se.find_items_by_merchant_id(id)
+		se.find_items_by_merchant_id(id)
 	end
 end

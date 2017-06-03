@@ -31,7 +31,8 @@ class Item
   end
 
   def unit_price_to_dollars
-    @unit_price.to_f.round(2)
+    dollar_amount = ((@unit_price.to_f) / 100.00)
+    dollar_amount.round(2)
   end
 
   def merchant

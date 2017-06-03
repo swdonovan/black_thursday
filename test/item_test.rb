@@ -102,7 +102,7 @@ class ItemTest < Minitest::Test
   def test_unit_price_to_dollars_correctly_converts_to_float
     a = Item.new({:name => "Bruce", :id => "685521578", :description => "Not avaliable",
       :unit_price => "40000", :created_at => "Monday", :updated_at => "Tuesday", :merchant_id => "56843166496526862"}, ItemRepository)
-    expected = 40000.00
+    expected = 400.00
     actual = a.unit_price_to_dollars
 
     assert_equal expected, actual
@@ -111,7 +111,7 @@ class ItemTest < Minitest::Test
   def test_unit_price_to_dollars_correctly_converts_different_number_to_float
     a = Item.new({:name => "Bruce", :id => "685521578", :description => "Not avaliable",
       :unit_price => "525", :created_at => "Monday", :updated_at => "Tuesday", :merchant_id => "56843166496526862"}, ItemRepository)
-    expected = 525.00
+    expected = 5.25
     actual = a.unit_price_to_dollars
 
     assert_equal expected, actual
@@ -120,7 +120,7 @@ class ItemTest < Minitest::Test
   def test_unit_price_to_dollars_correctly_only_returns_2_decimal_points
     a = Item.new({:name => "Bruce", :id => "685521578", :description => "Not avaliable",
       :unit_price => "525.964672", :created_at => "Monday", :updated_at => "Tuesday", :merchant_id => "56843166496526862"}, ItemRepository)
-    expected = 525.96
+    expected = 5.26
     actual = a.unit_price_to_dollars
 
     assert_equal expected, actual
@@ -129,7 +129,7 @@ class ItemTest < Minitest::Test
   def test_unit_price_to_dollars_correctly_only_returns_2_decimal_points_again
     a = Item.new({:name => "Bruce", :id => "685521578", :description => "Not avaliable",
       :unit_price => "1.23124565314865", :created_at => "Monday", :updated_at => "Tuesday", :merchant_id => "56843166496526862"}, ItemRepository)
-    expected = 1.23
+    expected = 0.01
     actual = a.unit_price_to_dollars
 
     assert_equal expected, actual

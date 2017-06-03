@@ -165,9 +165,9 @@ class ItemRepositoryTest < Minitest::Test
 
   def test_it_finds_all_by_price
     a = setup
-    b = a.find_all_by_price("1200")
+    b = a.find_all_by_price("12.00")
     actual = b[0].unit_price_to_dollars
-    expected = 1200.0
+    expected = 12.0
 
     assert_equal expected, actual
   end
@@ -183,16 +183,16 @@ class ItemRepositoryTest < Minitest::Test
 
   def test_it_finds_all_by_price_2500
     a = setup
-    b = a.find_all_by_price("2500")
+    b = a.find_all_by_price("25")
     actual = b[0].unit_price_to_dollars
-    expected = 2500.0
+    expected = 25.0
 
     assert_equal expected, actual
   end
 
   def test_it_finds_all_by_price_3000
     a = setup
-    b = a.find_all_by_price("3000")
+    b = a.find_all_by_price("30.0")
     actual = b[0].name
     expected = "Moyenne toile"
 
@@ -248,7 +248,7 @@ class ItemRepositoryTest < Minitest::Test
     actual = [first_name, second_name, third_name]
     expected = ["Vogue Paris Original Givenchy 2307", "Wooden pen and stand", "HOT Crystal Dragon Fly Hand Blown Glass Art Gold Trim Figurine Lucky Collection"]
 
-    assert_equal 14, b.length
+    assert_equal 15, b.length
     assert_equal expected, actual
   end
 end

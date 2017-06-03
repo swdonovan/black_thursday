@@ -69,6 +69,13 @@ class SalesAnalyst
 		merchants
 	end
 
+	def average_item_price_for_merchant(id)
+		returned_merchant = se.merchants.find_by_id(id)
+		list_of_items = returned_merchant.items
+		binding.pry
+		list_of_items.inject(0) {|sum, price| sum + price.unit_price_to_dollars}
+	end
+
 end
 
 # se = SalesEngine.from_csv({

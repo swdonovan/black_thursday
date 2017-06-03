@@ -194,7 +194,7 @@ class SalesEngineTest < Minitest::Test
 			:items     => ARGV[0],
 			:merchants => ARGV[1],
 		})
-		b = a.items.find_all_by_price("3000")
+		b = a.items.find_all_by_price("30")
     actual = b[0].name
     expected = "Moyenne toile"
 
@@ -249,7 +249,7 @@ class SalesEngineTest < Minitest::Test
 		expected = "Custom LEGO Alien Minion - INSTRUCTIONS ONLY"
 
 		assert_equal expected, actual
-		assert_equal 10, b.length
+		assert_equal 38, b.length
 	end
 
 	def test_merchants_methods_pass_through_for_find_by_name
