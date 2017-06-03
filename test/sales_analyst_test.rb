@@ -68,5 +68,21 @@ end
 		assert_instance_of BigDecimal, actual
 	end
 
+  def test_it_finds_the_total_average_item_price_for_all_merchants
+		sa = SalesAnalyst.new(@sales_engine)
+    actual = sa.average_average_price_per_merchant
+		expected = 420.79
 
+		assert_equal expected, actual.to_f.round(2)
+		assert_instance_of BigDecimal, actual
+	end
+
+	def test_it_finds_the_total_average_item_price_for_all_merchants_without_item_fixture
+		sa = SalesAnalyst.new(@sales_engine_dos)
+    actual = sa.average_average_price_per_merchant
+		expected = 420.79
+
+		assert_equal expected, actual.to_f.round(2)
+		assert_instance_of BigDecimal, actual
+	end
 end

@@ -17,8 +17,7 @@ class SalesAnalyst
 		numerator = setup_average(all_merchants).inject(0) do |sum, instance|
 			sum + instance.length
 		end
-		denominator = setup_average(all_merchants).length
-		average = numerator.to_f / denominator.to_f
+		average = numerator.to_f / find_denominator(setup_average(all_merchants)).to_f
 		average.round(2)
 	end
 
@@ -35,7 +34,6 @@ class SalesAnalyst
 		average = find_average(all_merchants)
 		setup = setup_average(all_merchants)
 		standard_deviation = standard_deviation_computation(setup, average)
-
 	end
 
 	def standard_deviation_computation(setup, average)
@@ -80,7 +78,21 @@ class SalesAnalyst
 	end
 
 	def find_denominator(items)
-		items.length
+		if items.length == 0
+			return 1
+		else items.length
+		end
+	end
+
+	def average_average_price_per_merchant
+    all_merchants = se.merchants.all
+		find_all_average_prices(all_merchants) / find_denominator(all_merchants)
+	end
+
+	def find_all_average_prices(merchants)
+		merchants.inject(0) do |sum, merch|
+			sum + average_item_price_for_merchant(merch.id)
+		end
 	end
 end
 
