@@ -9,11 +9,6 @@ require 'pry'
 
 class ItemTest < Minitest::Test
 
-  def setup
-
-  end
-
-
   def test_it_exists
     a = Item.new({:name => "Mark", :id => nil, :description => nil,
       :unit_price => nil, :created_at => "2016-01-11 11:51:37 UTC", :updated_at => "2016-01-11 11:51:37 UTC", :merchant_id => nil}, ItemRepository)

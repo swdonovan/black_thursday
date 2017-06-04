@@ -4,11 +4,13 @@ require 'pry'
 #
 class SalesEngine
 	attr_reader :merchants,
-							:items
+							:items,
+							:invoices
 
 	def initialize(argv_values)
 		@merchants = MerchantRepository.new(argv_values[:merchants], self)
 		@items = ItemRepository.new(argv_values[:items], self)
+		@invoices = InvoiceRepository.new(argv_values[:invoices], self)
 	end
 
 	def self.from_csv(argv_values)
