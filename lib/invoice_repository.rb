@@ -14,6 +14,10 @@ class InvoiceRepository
     read_lines
 	end
 
+	# def inspect
+		# "#<#{self.class} #{@invoices.size} rows>"
+	# end
+
 	def read_lines
 		@all = @contents.map do |row|
 			Invoice.new({:customer_id => row[1], :id => row[0], :merchant_id => row[2],

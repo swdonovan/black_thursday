@@ -17,7 +17,7 @@ class Invoice
 		@customer_id = item_info[:customer_id].to_i
 		@id          = item_info[:id].to_i
 		@merchant_id = item_info[:merchant_id].to_i
-		@status      = item_info[:status].to_s
+		@status      = item_info[:status].intern
 		@created_at  = Time.parse(item_info[:created_at])
 		@updated_at  = Time.parse(item_info[:updated_at])
 	end

@@ -173,7 +173,7 @@ end
 	def test_top_merchant_invoice_count_method
 		a = SalesAnalyst.new(@sales_engine_dos)
 		actual = a.top_merchants_by_invoice_count
-		expected = 78
+		expected = 12
 
 		assert_equal expected, actual.length
 	end
@@ -189,7 +189,7 @@ end
 	def test_bottom_merchant_invoice_count_method
 		a = SalesAnalyst.new(@sales_engine_dos)
 		actual = a.bottom_merchants_by_invoice_count
-		expected = 92
+		expected = 4
 
 		assert_equal expected, actual.length
 	end

@@ -161,8 +161,8 @@ class SalesAnalyst
 		average = average_invoices_per_merchant
 		top_count = []
 		se.merchants.all.select do |merchant|
-			if merchant.invoices.length >= (average.to_f + std_dev)
-				top_count << merchant.name
+			if merchant.invoices.length >= (average.to_f + (std_dev*2))
+				top_count << merchant
 			end
 		end
 		top_count
@@ -173,8 +173,8 @@ class SalesAnalyst
 		average = average_invoices_per_merchant
 		bottom_count = []
 		se.merchants.all.select do |merchant|
-			if merchant.invoices.length <= (average.to_f - std_dev)
-				bottom_count << merchant.name
+			if merchant.invoices.length <= (average.to_f - (std_dev * 2))
+				bottom_count << merchant
 			end
 		end
 		bottom_count
@@ -227,7 +227,7 @@ class SalesAnalyst
 	end
 
 	def invoice_status(status)
-		status = status.to_s
+		status = status
 		desired_status = se.invoices.find_all_by_status(status).length.to_f
 		all_status = se.invoices.all.length.to_f
 		percentage = ((desired_status / all_status) * 100)

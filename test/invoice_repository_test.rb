@@ -20,7 +20,7 @@ class InvoiceRepositoryTest < Minitest::Test
 
 		refute nil, actual.all
 		assert_equal 4985, actual.all.length
-		assert_equal "pending", actual.all[0].status
+		assert_equal :pending, actual.all[0].status
 	end
 
 	def test_it_can_find_by_id
@@ -66,9 +66,9 @@ class InvoiceRepositoryTest < Minitest::Test
 
 	def test_it_finds_all_by_status
 		a = @invoice_spec_file
-		actual = a.find_all_by_status("pending")
-		actual_2 = a.find_all_by_status("shipped")
-		actual_3 = a.find_all_by_status("returned")
+		actual = a.find_all_by_status(:pending)
+		actual_2 = a.find_all_by_status(:shipped)
+		actual_3 = a.find_all_by_status(:returned)
 		all_actual = (actual.length + actual_2.length + actual_3.length)
 
 		assert_equal 1473, actual.length
