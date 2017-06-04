@@ -1,4 +1,4 @@
-require 'pry'
+# require 'pry'
 require 'csv'
 require_relative 'merchant'
 
@@ -9,12 +9,15 @@ class MerchantRepository
 							:all,
 							:se
 
-	def initialize(merchant_info, se = SalesEngine)
+	def initialize(merchant_info, se)
     @se = se
-		@all = all
 		open_file(merchant_info)
 		read_lines
 	end
+
+	# def inspect
+  #   "#<#{self.class} #{@merchants.size} rows>"
+  # end
 
 	def open_file(merchant_info)
 		@contents = CSV.open merchant_info, headers: true, header_converters: :symbol
@@ -50,11 +53,16 @@ class MerchantRepository
 			merchant.name.upcase.include?(segment.upcase)
 		end
 		choices.map do |line|
-			line.name.to_s
+			line#.name.to_s
 		end
 	end
 
-	def pass_to_se(id)
+	def pass_to_se_items(id)
 		se.find_items_by_merchant_id(id)
 	end
+
+	def pass_to_se_invoices(id)
+		se.find_invoice_by_merchant_id(id)
+	end
+
 end
