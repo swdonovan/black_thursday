@@ -8,7 +8,7 @@ class ItemRepository
               :all,
               :se
 
-  def initialize(item_info, se  )
+  def initialize(item_info, se)
     @se = se
 		@contents = CSV.open item_info, headers: true, header_converters: :symbol
     read_lines

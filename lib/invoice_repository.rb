@@ -1,4 +1,5 @@
 require 'pry'
+require 'csv'
 require_relative 'invoice'
 
 class InvoiceRepository
@@ -48,4 +49,9 @@ class InvoiceRepository
 		end
 		return status
 	end
+
+	def pass_to_se_merchant(merchant_id)
+		se.find_merchant_by_item_id(merchant_id)
+	end
+
 end

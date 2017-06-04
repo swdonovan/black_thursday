@@ -1,10 +1,12 @@
 require_relative 'sales_engine'
 require 'pry'
+require 'date'
+require 'time'
 
 class SalesAnalyst
 		attr_reader :se
 
-	def initialize (se = SalesEngine)
+	def initialize (se)
 		@se = se
 	end
 
@@ -132,6 +134,98 @@ class SalesAnalyst
 		end
 		golden_items
 	end
+
+	def average_invoices_per_merchant
+		merchants = se.merchants.all
+		invoices = se.invoices.all
+		average = average(invoices.length, merchants.length)
+		average.round(2)
+	end
+
+	def average_invoices_per_merchant_standard_deviation
+		average = average_invoices_per_merchant
+		setup = merch_invoice_instance
+		standard_deviation_computation(setup, average)
+	end
+
+	def merch_invoice_instance
+		all_merchants = se.merchants.all
+		all_merchants = all_merchants.map do |merchant|
+			merchant.invoices
+		end
+		all_merchants
+	end
+
+	def top_merchants_by_invoice_count
+		std_dev = average_invoices_per_merchant_standard_deviation
+		average = average_invoices_per_merchant
+		top_count = []
+		se.merchants.all.select do |merchant|
+			if merchant.invoices.length >= (average.to_f + std_dev)
+				top_count << merchant.name
+			end
+		end
+		top_count
+	end
+
+	def bottom_merchants_by_invoice_count
+		std_dev = average_invoices_per_merchant_standard_deviation
+		average = average_invoices_per_merchant
+		bottom_count = []
+		se.merchants.all.select do |merchant|
+			if merchant.invoices.length <= (average.to_f - std_dev)
+				bottom_count << merchant.name
+			end
+		end
+		bottom_count
+	end
+
+
+	def top_days_by_invoice_count
+		grouped_inv = date_group_invoices
+		std_dev = days_of_the_week_standard_deviation(grouped_inv)
+		days = days_above_two_stdevs(grouped_inv, std_dev)
+	end
+
+	def date_group_invoices
+		by_day_inv = se.invoices.all.group_by do |invoice|
+			created_on(invoice.created_at)
+		end
+	end
+
+	def created_on(invoice_date)
+		invoice_date.strftime("%A")
+	end
+
+	def days_of_the_week_standard_deviation(grouped_inv)
+		average = days_of_the_week_average(grouped_inv)
+		st_dev = grouped_inv.keys.inject(0) do |sum, day|
+			sum + (((grouped_inv[day].length) - average)**2)
+		end
+		st_dev = Math.sqrt(st_dev / (grouped_inv.length - 1))
+		st_dev.round(2)
+	end
+
+	def days_of_the_week_average(grouped_inv)
+		sum = grouped_inv.keys.inject(0) do |sum, date|
+  		sum + grouped_inv[date].length
+		end
+		average = sum.to_f / grouped_inv.length.to_f
+	end
+
+	def days_above_two_stdevs(grouped_inv, std)
+		average = days_of_the_week_average(grouped_inv)
+		day = []
+		grouped_inv.keys.find_all do |days|
+			day << days if grouped_inv[days].length > (average + std)
+		end
+		day
+	end
+
+	def average(numerator, denominator)
+		numerator.to_f / denominator.to_f
+	end
+
 end
 # se = SalesEngine.from_csv({
 #   :items     => ARGV[0],

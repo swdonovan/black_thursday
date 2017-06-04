@@ -57,7 +57,12 @@ class MerchantRepository
 		end
 	end
 
-	def pass_to_se(id)
+	def pass_to_se_items(id)
 		se.find_items_by_merchant_id(id)
 	end
+
+	def pass_to_se_invoices(id)
+		se.find_invoice_by_merchant_id(id)
+	end
+
 end

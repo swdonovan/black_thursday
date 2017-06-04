@@ -142,18 +142,26 @@ class MerchantRepositoryTest < Minitest::Test
 
 	def test_if_find_all_by_name_selects_ltd
 		a = setup
-		actual = a.find_all_by_name("ltd")
+		array = a.find_all_by_name("ltd")
+		actual = array.map do |merchant|
+			merchant.name
+		end
 		expected = ["Promotionalsearchltd"]
 
 		assert_equal expected, actual
+		assert_equal Merchant, array[0].class
 	end
 
-	def test_if_find_all_by_name_selects_ltd
+	def test_if_find_all_by_name_selects_the
 		a = setup
-		actual = a.find_all_by_name("the")
+		array = a.find_all_by_name("the")
+		actual = array.map do |merchant|
+			merchant.name
+		end
 		expected = ["TheLilPinkBowtique", "thepurplepenshop", "TheHamAndRat", "TheAssemblyRooms", "matthewbritts", "TheWoodchopDesign", "ToThePoints", "TheKnitBySusie", "CANNATHERAPYCO", "TheSequinnedOwl", "TheLittleGlitter", "ForTheLoveOfCop", "LeatherMinn", "SeeyouSoonthen", "SweetheartDarling", "WhatTheDoctorOrdered", "StatesmanLeather", "NicholasLeatherWorld", "TheHairFader", "southernncreations", "Gracebythebook", "SouthernComfrtCndles", "TheCullenChronicles", "thesageandspirit"]
 
 		assert_equal expected, actual
+		assert_equal Merchant, array[0].class
 	end
 
 end

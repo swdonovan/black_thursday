@@ -9,10 +9,12 @@ def setup
 	@sales_engine = SalesEngine.from_csv({
 	  :items     => './test/data/items_fixture.csv',
 	  :merchants => './data/merchants.csv',
+		:invoices   => './test/data/invoice_fixture.csv',
 	})
 	@sales_engine_dos = SalesEngine.from_csv({
 		:items     => './data/items.csv',
 		:merchants => './data/merchants.csv',
+		:invoices   => './data/invoices.csv',
 		})
 end
 
@@ -143,4 +145,77 @@ end
 		assert_equal "Solid American Black Walnut Trestle Table", actual[4].name
 		assert_equal 5, actual.length
 	end
+
+	def test_it_can_find_average_invoices_per_merchant
+		a = SalesAnalyst.new(@sales_engine_dos)
+		actual = a.average_invoices_per_merchant
+		expected = 10.49
+
+		assert_equal expected, actual
+	end
+
+	def test_it_can_find_average_invoices_per_merchant_standard_deviation
+		a = SalesAnalyst.new(@sales_engine_dos)
+		actual = a.average_invoices_per_merchant_standard_deviation
+		expected = 3.29
+
+		assert_equal expected, actual
+	end
+
+	def test_it_can_find_fixture_average_invoices_per_merchant_standard_deviation
+		a = SalesAnalyst.new(@sales_engine)
+		actual = a.average_invoices_per_merchant_standard_deviation
+		expected = 0.65
+
+		assert_equal expected, actual
+	end
+
+	def test_top_merchant_invoice_count_method
+		a = SalesAnalyst.new(@sales_engine_dos)
+		actual = a.top_merchants_by_invoice_count
+		expected = 78
+
+		assert_equal expected, actual.length
+	end
+
+	def test_fixture_top_merchant_invoice_count_method
+		a = SalesAnalyst.new(@sales_engine)
+		actual = a.top_merchants_by_invoice_count
+		expected = 34
+
+		assert_equal expected, actual.length
+	end
+
+	def test_bottom_merchant_invoice_count_method
+		a = SalesAnalyst.new(@sales_engine_dos)
+		actual = a.bottom_merchants_by_invoice_count
+		expected = 92
+
+		assert_equal expected, actual.length
+	end
+
+	def test_fixture_bottom_merchant_invoice_count_method
+		a = SalesAnalyst.new(@sales_engine)
+		actual = a.bottom_merchants_by_invoice_count
+		expected = 0
+
+		assert_equal expected, actual.length
+	end
+
+	def test_sa_can_find_high_invoice_days
+		a = SalesAnalyst.new(@sales_engine_dos)
+		actual = a.top_days_by_invoice_count
+		expected = ["Wednesday"]
+
+		assert_equal expected, actual
+	end
+
+	def test_sa_can_find_high_invoice_days_with_fixture
+		a = SalesAnalyst.new(@sales_engine)
+		actual = a.top_days_by_invoice_count
+		expected = ["Friday"]
+
+		assert_equal expected, actual
+	end
+
 end

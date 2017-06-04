@@ -12,6 +12,10 @@ class Merchant
 	end
 
 	def items
-    mr.pass_to_se(id)
+    mr.pass_to_se_items(id)
+	end
+
+	def invoices
+		mr.pass_to_se_invoices(id)
 	end
 end

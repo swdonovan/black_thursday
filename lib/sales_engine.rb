@@ -1,5 +1,7 @@
 require_relative 'merchant_repository'
 require_relative 'item_repository'
+require_relative 'invoice_repository'
+require 'csv'
 require 'pry'
 #
 class SalesEngine
@@ -9,8 +11,8 @@ class SalesEngine
 
 	def initialize(argv_values)
 		@merchants = MerchantRepository.new(argv_values[:merchants], self)
-		@items = ItemRepository.new(argv_values[:items], self)
-		@invoices = InvoiceRepository.new(argv_values[:invoices], self)
+		@items     = ItemRepository.new(argv_values[:items], self)
+		@invoices  = InvoiceRepository.new(argv_values[:invoices], self)
 	end
 
 	def self.from_csv(argv_values)
@@ -23,6 +25,10 @@ class SalesEngine
 
 	def find_merchant_by_item_id(id)
     merchants.find_by_id(id)
+	end
+
+	def find_invoice_by_merchant_id(id)
+		invoices.find_all_by_merchant_id(id)
 	end
 end
 

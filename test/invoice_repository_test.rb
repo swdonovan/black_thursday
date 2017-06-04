@@ -7,15 +7,16 @@ require_relative '../lib/invoice_repository'
 class InvoiceRepositoryTest < Minitest::Test
 
   def setup
-    InvoiceRepository.new('./data/invoices.csv', SalesEngine)
+    @invoice_spec_file = InvoiceRepository.new('./data/invoices.csv', SalesEngine)
+		@invoice_fixture = InvoiceRepository.new('./test/data/invoice_fixture.csv', SalesEngine)
   end
 
 	def test_it_exists
-		assert_instance_of InvoiceRepository, setup
+		assert_instance_of InvoiceRepository, @invoice_spec_file
 	end
 
 	def test_it_returns_array_of_all_invoices
-		actual = setup
+		actual = @invoice_spec_file
 
 		refute nil, actual.all
 		assert_equal 4985, actual.all.length
@@ -23,7 +24,7 @@ class InvoiceRepositoryTest < Minitest::Test
 	end
 
 	def test_it_can_find_by_id
-		a = setup
+		a = @invoice_spec_file
 		actual = a.find_by_id(6)
 		expected = 12334389
 
@@ -33,21 +34,21 @@ class InvoiceRepositoryTest < Minitest::Test
 	end
 
 	def test_find_id_if_nil
-		a = setup
+		a = @invoice_spec_file
 		actual = a.find_by_id(nil)
 
 		assert_nil actual
 	end
 
 	def test_if_number_doesnt_exsist
-		a = setup
+		a = @invoice_spec_file
 		actual = a.find_by_id(5000)
 
 		assert_nil actual
 	end
 
 	def test_it_finds_customer_id
-		a = setup
+		a = @invoice_spec_file
 		actual = a.find_all_by_customer_id(49)
 
 		assert_equal 257, actual[0].id
@@ -56,7 +57,7 @@ class InvoiceRepositoryTest < Minitest::Test
 	end
 
 	def test_it_finds_all_by_merchant_id
-		a = setup
+		a = @invoice_spec_file
 		actual = a.find_all_by_merchant_id(12334389)
 
 		assert_equal 6, actual[0].id
@@ -64,7 +65,7 @@ class InvoiceRepositoryTest < Minitest::Test
 	end
 
 	def test_it_finds_all_by_status
-		a = setup
+		a = @invoice_spec_file
 		actual = a.find_all_by_status("pending")
 		actual_2 = a.find_all_by_status("shipped")
 		actual_3 = a.find_all_by_status("returned")
@@ -74,5 +75,13 @@ class InvoiceRepositoryTest < Minitest::Test
 		assert_equal 48, actual[15].id
 		assert_equal 4985, all_actual
 	end
+
+	# def test_it_can_find_average_invoices_per_merchant_fixture
+	# 	a = @invoice_fixture
+	# 	actual = a.average_invoices_per_merchant
+	#
+	#
+	# 	assert_equal 10.49, actual
+	# end
 
 end

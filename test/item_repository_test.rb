@@ -248,7 +248,7 @@ class ItemRepositoryTest < Minitest::Test
     actual = [first_name, second_name, third_name]
     expected = ["Vogue Paris Original Givenchy 2307", "Wooden pen and stand", "HOT Crystal Dragon Fly Hand Blown Glass Art Gold Trim Figurine Lucky Collection"]
 
-    assert_equal 15, b.length
+    assert_equal 14, b.length
     assert_equal expected, actual
   end
 end
