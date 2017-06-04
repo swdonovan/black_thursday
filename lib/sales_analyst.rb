@@ -47,14 +47,14 @@ class SalesAnalyst
 	def merchants_with_high_item_count
 		st_d = average_items_per_merchant_standard_deviation
 		all_merchants = se.merchants.all
-		setup = setup_average_instance(all_merchants)
-		find_high_item_merchants(st_d, setup)
+		# setup = setup_average_instance(all_merchants)
+		find_high_item_merchants(st_d, all_merchants, find_average(all_merchants))
 	end
 
-	def find_high_item_merchants(st_d, setup)
+	def find_high_item_merchants(st_d, setup, average)
 		merchants = []
 		setup.select do |merchant|
-			merchants << merchant.name if merchant.items.length >= st_d
+			merchants << merchant if merchant.items.length >= (st_d + average)
 		end
 		merchants
 	end
@@ -71,6 +71,7 @@ class SalesAnalyst
 		returned_merchant = se.merchants.find_by_id(id)
 		list_of_items = returned_merchant.items
 		average_item_price = (find_numerator(list_of_items)) / (find_denominator(list_of_items))
+		average_item_price.round(2)
 	end
 
 	def find_numerator(items)
@@ -86,7 +87,8 @@ class SalesAnalyst
 
 	def average_average_price_per_merchant
     all_merchants = se.merchants.all
-		find_all_average_prices(all_merchants) / find_denominator(all_merchants)
+		total = find_all_average_prices(all_merchants) / find_denominator(all_merchants)
+		total.round(2)
 	end
 
 	def find_all_average_prices(merchants)
@@ -124,18 +126,12 @@ class SalesAnalyst
 	end
 
 	def find_golden_items(st_d, setup, average)
-		# find_2_standard_deviations_price_difference(average, standard_deviation)
 		golden_items = []
 		setup.select do |item|
-			golden_items << item if item.unit_price_to_dollars > (((st_d - average)*2) + average)
+			golden_items << item if item.unit_price_to_dollars > (((st_d - average) * 2) + average)
 		end
 		golden_items
 	end
-
-	# def find_2_standard_deviations_price_difference
-	# 	sta
-	# end
-
 end
 # se = SalesEngine.from_csv({
 #   :items     => ARGV[0],

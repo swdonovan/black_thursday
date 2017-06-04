@@ -55,10 +55,25 @@ end
 	def test_it_can_find_merchants_with_high_item_count
 		sa = SalesAnalyst.new(@sales_engine)
 		actual = sa.merchants_with_high_item_count
-		expected = ["Shopin1901", "MiniatureBikez", "jejum", "BowlsByChris", "handicraftcallery", "Madewithgitterxx", "FlavienCouche", "BloominScents", "MuttisStrickwaren", "WellnessNeelsen", "Woodenpenshop", "TheAssemblyRooms", "SLHandmades", "Soudoveshop", "dansoilpaintings", "2MAKERSMARKET", "WoodleyShop", "Jesuisunponey", "Witoldart", "IOleynikova", "leaburrot", "ExecutiveGiftShoppe"]
+		expected = 22
 
-		assert_equal expected, actual
+		assert_equal expected, actual.length
+		assert_equal "Shopin1901", actual[0].name
+		assert_equal "SLHandmades", actual[12].name
+		assert_equal "ExecutiveGiftShoppe", actual[21].name
 	end
+
+	def test_it_can_find_merchants_with_high_item_count_without_fixture
+		sa = SalesAnalyst.new(@sales_engine_dos)
+		actual = sa.merchants_with_high_item_count
+		expected = 52
+
+		assert_equal expected, actual.length
+		assert_equal "Keckenbauer", actual[0].name
+		assert_equal "JamesCByrneART", actual[25].name
+		assert_equal "JewelleAccessories", actual[51].name
+	end
+
 
 	def test_it_finds_average_price_per_item
 		sa = SalesAnalyst.new(@sales_engine)

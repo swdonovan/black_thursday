@@ -53,7 +53,7 @@ class MerchantRepository
 			merchant.name.upcase.include?(segment.upcase)
 		end
 		choices.map do |line|
-			line.name.to_s
+			line#.name.to_s
 		end
 	end
 

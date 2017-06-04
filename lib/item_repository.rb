@@ -64,16 +64,22 @@ class ItemRepository
 	end
 
   def find_all_by_price_in_range(range)
-    range = convert_range(range)
-    choices = all.select do |price|
-      range.include?(price.unit_price_to_dollars.to_i)
+    # range = convert_range(range)
+    choices = all.find_all do |price|
+      range.include?((price.unit_price_to_dollars))
     end
   end
 
-  def convert_range(range)
-    range = range.to_s.split("..")
-    range = [*((range[0].to_f)).to_i..((range[1].to_f)).to_i]
-  end
+  # def convert_range(range)
+  #   range = range.to_s.split("..")
+  #   range = [*((range[0].to_f.to_i))..((range[1].to_f.to_i))]
+  # end
+  #
+  # def iterate_through_float_loophole(price)
+  #   price.to_f
+  #   price * 100
+  #
+  # end
 
   def pass_to_se(id)
     se.find_merchant_by_item_id(id)
