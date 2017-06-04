@@ -19,14 +19,14 @@ class InvoiceItem
     @item_id    = invoice_item_info[:item_id].to_i
     @invoice_id = invoice_item_info[:invoice_id].to_i
     @quantity   = invoice_item_info[:quantity].to_i
-    @created_at = invoice_item_info[:created_at]
-    @updated_at = invoice_item_info[:updated_at]
-    @unit_price = invoice_item_info[:unit_price]
+    @created_at = Time.parse(invoice_item_info[:created_at].to_s)
+    @updated_at = Time.parse(invoice_item_info[:updated_at].to_s)
+    @unit_price = to_big_decimal(invoice_item_info[:unit_price].to_s)
   end
 
-  # def to_big_decimal(price)
-  #   price = BigDecimal.new(price, price.length)
-  # end
+  def to_big_decimal(price)
+    price = BigDecimal.new(price, price.length)
+  end
 
   def unit_price_to_dollars
     @unit_price.to_f
