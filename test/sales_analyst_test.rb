@@ -218,4 +218,44 @@ end
 		assert_equal expected, actual
 	end
 
+	def test_it_can_find_invoice_status_percentage
+		a = SalesAnalyst.new(@sales_engine)
+		actual = a.invoice_status(:pending)
+		expected = 29.0
+
+		assert_equal expected, actual
+	end
+
+	def test_it_can_find_invoice_status_percentage_for_shipped
+		a = SalesAnalyst.new(@sales_engine)
+		actual = a.invoice_status(:shipped)
+		expected = 59.5
+
+		assert_equal expected, actual
+	end
+
+	def test_it_can_find_invoice_status_percentage_without_fixture_pending
+		a = SalesAnalyst.new(@sales_engine_dos)
+		actual = a.invoice_status(:pending)
+		expected = 29.55
+
+		assert_equal expected, actual
+	end
+
+	def test_it_can_find_invoice_status_percentage_without_fixture_shipped
+		a = SalesAnalyst.new(@sales_engine_dos)
+		actual = a.invoice_status(:shipped)
+		expected = 56.95
+
+		assert_equal expected, actual
+	end
+
+	def test_it_can_find_invoice_status_percentage_without_fixture_returned
+		a = SalesAnalyst.new(@sales_engine_dos)
+		actual = a.invoice_status(:returned)
+		expected = 13.5
+
+		assert_equal expected, actual
+	end
+
 end

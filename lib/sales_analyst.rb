@@ -6,7 +6,7 @@ require 'time'
 class SalesAnalyst
 		attr_reader :se
 
-	def initialize (se)
+	def initialize(se)
 		@se = se
 	end
 
@@ -224,6 +224,14 @@ class SalesAnalyst
 
 	def average(numerator, denominator)
 		numerator.to_f / denominator.to_f
+	end
+
+	def invoice_status(status)
+		status = status.to_s
+		desired_status = se.invoices.find_all_by_status(status).length.to_f
+		all_status = se.invoices.all.length.to_f
+		percentage = ((desired_status / all_status) * 100)
+		percentage.round(2)
 	end
 
 end
