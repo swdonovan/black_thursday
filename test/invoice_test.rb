@@ -44,7 +44,4 @@ class InvoiceTest < Minitest::Test
 		assert_equal 7, @i_2.customer_id
 		assert_instance_of Time, @i_3.updated_at
 	end
-
-
-
 end

@@ -19,7 +19,7 @@ class TransactionRepositoryTest < Minitest::Test
 
     assert_equal expected, actual.length
     assert_instance_of Array, actual
-    assert_equal "4068631943231473", actual[0].credit_card_number
+    assert_equal "4068631943231473", actual[0].credit_card_number.to_s
     assert_equal "success", actual[4000].result
     assert_equal 46, actual[45].id
   end

@@ -6,6 +6,10 @@ class InvoiceItemRepository
   attr_reader :contents,
               :all,
               :se
+  # 
+  # def inspect
+	# 	"#<#{self.class} #{@invoices.size} rows>"
+	# end
 
   def initialize(invoice_item_info, se)
     @se = se

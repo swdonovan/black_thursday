@@ -10,11 +10,17 @@ def setup
 	  :items     => './test/data/items_fixture.csv',
 	  :merchants => './data/merchants.csv',
 		:invoices   => './test/data/invoice_fixture.csv',
+		:invoice_items => "./test/data/invoice_items_fixture.csv",
+		:transactions  => "./test/data/transactions_fixture.csv",
+		:customers     => "./test/data/customers_fixture.csv"
 	})
 	@sales_engine_dos = SalesEngine.from_csv({
-		:items     => './data/items.csv',
-		:merchants => './data/merchants.csv',
-		:invoices   => './data/invoices.csv',
+		:items         => "./data/items.csv",
+		:merchants     => "./data/merchants.csv",
+		:invoices      => "./data/invoices.csv",
+		:invoice_items => "./data/invoice_items.csv",
+		:transactions  => "./data/transactions.csv",
+		:customers     => "./data/customers.csv"
 		})
 end
 

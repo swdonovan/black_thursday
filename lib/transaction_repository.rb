@@ -7,6 +7,10 @@ class TransactionRepository
               :all,
               :se
 
+  # def inspect
+	# 	"#<#{self.class} #{@invoices.size} rows>"
+	# end
+
   def initialize(transaction_info, se)
     @se = se
     @contents = CSV.open transaction_info, headers: true, header_converters: :symbol
@@ -37,6 +41,7 @@ class TransactionRepository
 	end
 
   def find_all_by_credit_card_number(credit_card_number)
+    credit_card_number = credit_card_number.to_i
 		transaction = all.select do |instance|
 			instance if instance.credit_card_number == credit_card_number
 		end

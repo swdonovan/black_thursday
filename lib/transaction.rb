@@ -15,7 +15,7 @@ class Transaction
     @tr                          = tr
     @id                          = transactions_info[:id].to_i
     @invoice_id                  = transactions_info[:invoice_id].to_i
-    @credit_card_number          = transactions_info[:credit_card_number]
+    @credit_card_number          = transactions_info[:credit_card_number].to_i
     @created_at                  = Time.parse(transactions_info[:created_at].to_s)
     @updated_at                  = Time.parse(transactions_info[:updated_at].to_s)
     @credit_card_expiration_date = transactions_info[:credit_card_expiration_date]

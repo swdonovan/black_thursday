@@ -6,6 +6,10 @@ class CustomerRepository
   attr_reader :contents,
               :all,
               :se
+  # 
+  # def inspect
+	# 	"#<#{self.class} #{@invoices.size} rows>"
+	# end
 
   def initialize(customer_info, se)
     @se = se
@@ -31,14 +35,14 @@ class CustomerRepository
 
   def find_all_by_first_name(first_name)
 		customer = all.select do |instance|
-			instance if instance.first_name == first_name
+			instance if instance.first_name.downcase.include?(first_name.downcase)
 		end
 		return customer
 	end
 
   def find_all_by_last_name(last_name)
 		customer = all.select do |instance|
-			instance if instance.last_name == last_name
+			instance if instance.last_name.downcase.include?(last_name.downcase)
 		end
 		return customer
 	end

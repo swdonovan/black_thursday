@@ -46,7 +46,7 @@ class TransactionTest < Minitest::Test
     def test_ii_1
       assert_equal 6, @t_1.id
       assert_equal 8, @t_1.invoice_id
-      assert_equal "4242424242424242", @t_1.credit_card_number
+      assert_equal "4242424242424242", @t_1.credit_card_number.to_s
       assert_equal "0220", @t_1.credit_card_expiration_date
       assert_equal "success", @t_1.result
       assert_equal Time, @t_1.created_at.class
@@ -56,7 +56,7 @@ class TransactionTest < Minitest::Test
     def test_ii_2
       assert_equal 12, @t_2.id
       assert_equal 81, @t_2.invoice_id
-      assert_equal "1234567898765432", @t_2.credit_card_number
+      assert_equal "1234567898765432", @t_2.credit_card_number.to_s
       assert_equal "5280", @t_2.credit_card_expiration_date
       assert_equal "failure", @t_2.result
       assert_equal Time, @t_2.created_at.class
@@ -66,7 +66,7 @@ class TransactionTest < Minitest::Test
     def test_ii_3
       assert_equal 67, @t_3.id
       assert_equal 4, @t_3.invoice_id
-      assert_equal "1212121212121212", @t_3.credit_card_number
+      assert_equal "1212121212121212", @t_3.credit_card_number.to_s
       assert_equal "8008", @t_3.credit_card_expiration_date
       assert_equal "tbd", @t_3.result
       assert_equal Time, @t_3.created_at.class

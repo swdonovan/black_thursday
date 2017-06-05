@@ -40,10 +40,15 @@ class Invoice
 
 	def is_paid_in_full?
 		payment_status = transactions
-		if payment_status.all? { |e| e.result == "success" }
+		if payment_status.all? { |e| e.result == "success"}
 			true
+		elsif payment_status == nil
+			false
 		else
 			false
 		end
+	end
+
+	def total
 	end
 end

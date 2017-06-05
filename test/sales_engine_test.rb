@@ -351,7 +351,7 @@ class SalesEngineTest < Minitest::Test
 		assert_equal 3, actual.length
 		assert_equal Transaction, actual[1].class
 		assert_equal Transaction, actual[2].class
-		assert_equal "4363584547318205", actual[1].credit_card_number
+		assert_equal "4363584547318205", actual[1].credit_card_number.to_s
 		assert_equal "success", actual[2].result
 	end
 
@@ -424,6 +424,14 @@ class SalesEngineTest < Minitest::Test
 	def test_an_invoice_can_check_if_it_is_paid_in_full_and_be_false
 		a = @se_uno
 		b = a.invoices.find_by_id(3560)
+		actual = b.is_paid_in_full?
+
+		refute actual
+	end
+
+	def test_an_invoice_can_check_if_it_is_paid_in_full_and_be_false_again
+		a = @se_uno
+		b = a.invoices.find_by_id(203)
 		actual = b.is_paid_in_full?
 
 		refute actual

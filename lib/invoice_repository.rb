@@ -15,7 +15,7 @@ class InvoiceRepository
 	end
 
 	# def inspect
-		# "#<#{self.class} #{@invoices.size} rows>"
+	# 	"#<#{self.class} #{@invoices.size} rows>"
 	# end
 
 	def read_lines
