@@ -15,6 +15,15 @@ class SalesEngineTest < Minitest::Test
 		  :transactions  => "./data/transactions.csv",
 		  :customers     => "./data/customers.csv"
 			})
+
+		# @se_dos = SalesEngine.from_csv({
+		# 	:items         => "./test/data/items.csv",
+		#   :merchants     => "./test/data/merchants.csv",
+		#   :invoices      => "./test/data/invoices.csv",
+		#   :invoice_items => "./test/data/invoice_items.csv",
+		#   :transactions  => "./test/data/transactions.csv",
+		#   :customers     => "./test/data/customers.csv"
+		# 	})
 		#
 		# @se_file = SalesEngine.from_csv({
 		# 	:item => ARGV[0],
@@ -325,5 +334,33 @@ class SalesEngineTest < Minitest::Test
 		expected = "RnRGuitarPicks"
 
 		assert_equal expected, actual.name
+	end
+
+	def test_can_find_items_from_invoice_id
+		a = @se_uno
+		b = a.invoices.find_by_id(20)
+		actual = b.items
+		expected = Array
+
+		assert_equal expected, actual.class
+		assert_equal 5, actual.length
+		assert_equal Item, actual[1].class
+		assert_equal Item, actual[4].class
+		assert_equal "Magick Pain Lotion/Body Butter 1.5 oz", actual[1].name
+		assert_equal "Hand Painted Confetti Wine Glass", actual[4].name
+	end
+
+	def test_can_find_transactions_from_invoice_id
+		a = @se_uno
+		b = a.invoices.find_by_id(20)
+		actual = b.transactions
+		expected = Array
+
+		assert_equal expected, actual.class
+		assert_equal 3, actual.length
+		assert_equal Transaction, actual[1].class
+		assert_equal Transaction, actual[2].class
+		assert_equal "4363584547318205", actual[1].credit_card_number
+		assert_equal "success", actual[2].result
 	end
 end

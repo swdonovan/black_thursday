@@ -58,4 +58,11 @@ class InvoiceRepository
 		se.find_merchant_by_item_id(merchant_id)
 	end
 
+	def get_items_from_se(id)
+    se.find_items_by_invoice_id_1(id)
+	end
+
+	def get_transactions_from_se(id)
+    se.find_transactions_by_invoice_id(id)
+	end
 end

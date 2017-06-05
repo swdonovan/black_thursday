@@ -26,4 +26,11 @@ class Invoice
 		inv.pass_to_se_merchant(@merchant_id)
 	end
 
+	def items
+		inv.get_items_from_se(id)
+	end
+
+	def transactions
+		inv.get_transactions_from_se(id)
+	end
 end
