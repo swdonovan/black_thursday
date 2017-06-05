@@ -62,13 +62,20 @@ class SalesEngine
 
 	def find_customers_by_merchant_id(id)
 		merch_invoices = invoices.find_all_by_merchant_id(id)
-		merch_invoices.group_by do |invoice|
-			customers_first_name(invoice.customer)
+		customers = []
+		merch_invoices.map do |invoice|
+			customers << invoice.customer
 		end
+		customers
 	end
 
-	def customers_first_name(customer)
-		customer.first_name
+	def find_merchants_by_customer_id(id)
+		list_of_invoices = invoices.find_all_by_customer_id(id)
+		list_of_merchants = []
+		list_of_invoices.map do |invoice|
+			list_of_merchants << invoice.merchant
+		end
+    list_of_merchants
 	end
 end
 

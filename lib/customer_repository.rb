@@ -42,4 +42,8 @@ class CustomerRepository
 		end
 		return customer
 	end
+
+	def get_merchants_from_se(id)
+		se.find_merchants_by_customer_id(id)
+	end
 end

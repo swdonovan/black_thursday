@@ -17,4 +17,8 @@ class Customer
     @first_name                     = customer_info[:first_name]
     @last_name                      = customer_info[:last_name]
   end
+
+  def merchants
+    cst.get_merchants_from_se(id)
+  end
 end

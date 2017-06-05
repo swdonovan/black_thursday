@@ -23,7 +23,7 @@ class Invoice
 	end
 
 	def merchant
-		inv.pass_to_se_merchant(@merchant_id)
+		inv.pass_to_se_merchant(merchant_id)
 	end
 
 	def items

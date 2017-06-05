@@ -392,11 +392,24 @@ class SalesEngineTest < Minitest::Test
 		a = @se_uno
 		b = a.merchants.find_by_id(12335938)
 		actual = b.customers
-		expected = Hash
+		expected = Array
 
 		assert_equal expected, actual.class
-		assert_equal Array, actual["Joey"].class
-		assert_equal 1, actual["Joey"].length
-		assert_equal "2009-02-07 00:00:00 -0700", actual["Joey"][0].created_at.to_s
+		assert_equal 16, actual.length
+		assert_equal Customer, actual[0].class
+		assert_equal "Joey", actual[0].first_name
+	end
+
+	def test_can_find_merchants_from_customer_id_in_customers
+		a = @se_uno
+		b = a.customers.find_by_id(30)
+		actual = b.merchants
+		expected = Array
+
+		assert_equal expected, actual.class
+		assert_equal 5, actual.length
+		assert_equal Merchant, actual[0].class
+		assert_equal "SweetheartDarling", actual[0].name
+		assert_equal "thepurplepenshop", actual[4].name
 	end
 end
