@@ -65,4 +65,8 @@ class InvoiceRepository
 	def get_transactions_from_se(id)
     se.find_transactions_by_invoice_id(id)
 	end
+
+	def get_customer_from_se(id)
+		se.find_customer_by_customer_id(id)
+	end
 end

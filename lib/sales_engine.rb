@@ -51,6 +51,10 @@ class SalesEngine
 	def find_transactions_by_invoice_id(id)
 		transactions.find_all_by_invoice_id(id)
 	end
+
+	def find_customer_by_customer_id(id)
+		customers.find_by_id(id)
+	end
 end
 
 # se = SalesEngine.from_csv({

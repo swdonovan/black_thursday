@@ -33,4 +33,8 @@ class Invoice
 	def transactions
 		inv.get_transactions_from_se(id)
 	end
+
+	def customer
+		inv.get_customer_from_se(customer_id)
+	end
 end

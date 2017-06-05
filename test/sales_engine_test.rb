@@ -363,4 +363,26 @@ class SalesEngineTest < Minitest::Test
 		assert_equal "4363584547318205", actual[1].credit_card_number
 		assert_equal "success", actual[2].result
 	end
+
+	def test_can_find_transactions_from_invoice_id
+		a = @se_uno
+		b = a.invoices.find_by_id(20)
+		actual = b.customer
+		expected = Customer
+
+		assert_equal expected, actual.class
+		assert_equal "Sylvester", actual.first_name
+		assert_equal "Nader", actual.last_name
+	end
+
+	def test_can_find_transactions_from_invoice_id
+		a = @se_uno
+		b = a.invoices.find_by_id(3)
+		actual = b.customer
+		expected = Customer
+
+		assert_equal expected, actual.class
+		assert_equal "Joey", actual.first_name
+		assert_equal "Ondricka", actual.last_name
+	end
 end
