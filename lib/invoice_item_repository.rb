@@ -6,7 +6,7 @@ class InvoiceItemRepository
   attr_reader :contents,
               :all,
               :se
-  
+
   # def inspect
 	# 	"#<#{self.class} #{@invoices.size} rows>"
 	# end
@@ -22,7 +22,6 @@ class InvoiceItemRepository
       InvoiceItem.new({:item_id => row[1], :id => row[0], :invoice_id => row[2],
         :quantity => row[3], :created_at => row[5], :updated_at => row[6], :unit_price => row[4]}, self)
     end
-
     return all
   end
 

@@ -6,7 +6,7 @@ class CustomerRepository
   attr_reader :contents,
               :all,
               :se
-  
+
   # def inspect
 	# 	"#<#{self.class} #{@invoices.size} rows>"
 	# end
@@ -50,4 +50,8 @@ class CustomerRepository
 	def get_merchants_from_se(id)
 		se.find_merchants_by_customer_id(id)
 	end
+
+  def get_invoices_for_customer_id(id)
+    se.find_invoices_by_customer_id(id)
+  end
 end

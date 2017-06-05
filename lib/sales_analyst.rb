@@ -234,11 +234,67 @@ class SalesAnalyst
 		percentage.round(2)
 	end
 
+	def top_buyers(num_o_buyers = 20)
+		x = "#{num_o_buyers}"
+		all_customers = top_customers(sort_invoices_by_total, x)
+	end
+
+	def sort_invoices_by_total
+		all_customers = se.customers.all
+		total_invoice_sum = all_customers.sort_by do |customer|
+			sum_invoices(customer.invoices)
+		end
+		total_invoice_sum = total_invoice_sum.reverse
+	end
+
+	def top_customers(total_invoice_sum, x)
+		total_invoice_sum[0..(x.to_i - 1)].map do |customer|
+			customer.first_name + " " + customer.last_name
+		end
+	end
+
+	def sum_invoices(invoices)
+		var = invoices.inject(0) do |sum, invoice|
+			sum + invoice.total.to_f
+		end
+	end
+
+	def top_merchant_for_customer(customer_id)
+		ident = se.customers.find_by_id(customer_id)
+		inv = ident.invoices
+		grouped = group_invoices_by_merchant(inv)
+		top_merchant(grouped)
+	end
+
+	def top_merchant(grouped)
+		sorted_qty = grouped.keys.sort_by do |key|
+			sum_invoice_quantity(grouped[key])
+		end
+		sorted_qty = sorted_qty.reverse
+		se.merchants.find_by_id(sorted_qty[0]).name
+	end
+
+	def group_invoices_by_merchant(inv)
+		inv.group_by do |invoice|
+			invoice.merchant_id
+		end
+	end
+
+	def sum_invoice_quantity(grouped_key)
+		sum = grouped_key.inject(0) do |sum, invoice|
+			sum + invoice.total_quantity
+		end
+	end
+
 end
-# se = SalesEngine.from_csv({
-#   :items     => ARGV[0],
-#   :merchants => ARGV[1],
+# @sales_engine_dos = SalesEngine.from_csv({
+# 	:items     => './data/items.csv',
+# 	:merchants => './data/merchants.csv',
+# 	:invoices   => './data/invoices.csv',
+# 	:invoice_items => "./data/invoice_items.csv",
+# 	:transactions  => "./data/transactions.csv",
+# 	:customers     => "./test/data/customers_fixture.csv"
 # })
-#
-# sa = SalesAnalyst.new(se)
-#
+# #
+# sa = SalesAnalyst.new(@sales_engine_dos)
+# sa.top_buyers(4)

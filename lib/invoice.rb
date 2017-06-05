@@ -70,7 +70,6 @@ class Invoice
 
 	def find_total_unit_cost(list)
 		list.map! do |inv_item_group|
-      # inv_item_group[0].class
 			transactionception_level_1(inv_item_group)
     end
 	end
@@ -79,4 +78,18 @@ class Invoice
 		array.inject(0) {|sum, paid| sum + (paid.unit_price * paid.quantity)}
 	end
 
+	def total_quantity
+		to_calc = get_invoice_items(find_successful_transactions)
+		find_total_invoice_quantity(to_calc).uniq.shift
+	end
+
+	def find_total_invoice_quantity(list)
+		list.map! do |inv_item_group|
+			transactionception_level_2(inv_item_group)
+		end
+	end
+
+	def transactionception_level_2(array)
+		array.inject(0) {|sum, paid| sum + (paid.quantity)}
+	end
 end

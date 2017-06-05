@@ -21,4 +21,8 @@ class Customer
   def merchants
     cst.get_merchants_from_se(id)
   end
+
+  def invoices
+    cst.get_invoices_for_customer_id(id)
+  end
 end
