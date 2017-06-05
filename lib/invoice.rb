@@ -37,4 +37,13 @@ class Invoice
 	def customer
 		inv.get_customer_from_se(customer_id)
 	end
+
+	def is_paid_in_full?
+		payment_status = transactions
+		if payment_status.all? { |e| e.result == "success" }
+			true
+		else
+			false
+		end
+	end
 end

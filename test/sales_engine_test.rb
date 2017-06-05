@@ -412,4 +412,20 @@ class SalesEngineTest < Minitest::Test
 		assert_equal "SweetheartDarling", actual[0].name
 		assert_equal "thepurplepenshop", actual[4].name
 	end
+
+	def test_an_invoice_can_check_if_it_is_paid_in_full
+		a = @se_uno
+		b = a.invoices.find_by_id(20)
+		actual = b.is_paid_in_full?
+
+		assert actual
+	end
+
+	def test_an_invoice_can_check_if_it_is_paid_in_full_and_be_false
+		a = @se_uno
+		b = a.invoices.find_by_id(3560)
+		actual = b.is_paid_in_full?
+
+		refute actual
+	end
 end
