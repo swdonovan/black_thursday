@@ -22,4 +22,11 @@ class TransactionRepository
     return all
   end
 
+  def find_by_id(id)
+    transaction = all.select do |instance|
+      instance if instance.id == id
+    end
+    return transaction.shift
+  end
+
 end
