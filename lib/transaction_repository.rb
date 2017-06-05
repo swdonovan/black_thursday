@@ -29,4 +29,18 @@ class TransactionRepository
     return transaction.shift
   end
 
+  def find_all_by_invoice_id(invoice_id)
+		invoice = all.select do |instance|
+			instance if instance.invoice_id == invoice_id
+		end
+		return invoice
+	end
+
+  def find_all_by_credit_card_number(credit_card_number)
+		transaction = all.select do |instance|
+			instance if instance.credit_card_number == credit_card_number
+		end
+		return transaction
+	end
+
 end
