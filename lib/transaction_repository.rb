@@ -43,4 +43,10 @@ class TransactionRepository
 		return transaction
 	end
 
+  def find_all_by_result(result)
+		transaction = all.select do |instance|
+			instance if instance.result == result
+		end
+		return transaction
+	end
 end

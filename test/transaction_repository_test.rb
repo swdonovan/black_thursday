@@ -64,7 +64,7 @@ class TransactionRepositoryTest < Minitest::Test
 		assert_equal 2, actual.length
 	end
 
-  def test_it_finds_all_by_crea
+  def test_it_finds_all_by_credit_card_number
 		a = setup
 		actual = a.find_all_by_credit_card_number("4890371279632775")
 
@@ -72,11 +72,34 @@ class TransactionRepositoryTest < Minitest::Test
 		assert_equal 1, actual.length
 	end
 
-  def test_it_finds_all_by_crea_again
+  def test_it_finds_all_by_credit_card_number_again
 		a = setup
 		actual = a.find_all_by_credit_card_number("4841404241773918")
 
 		assert_equal 237, actual[0].id
 		assert_equal 1, actual.length
 	end
+
+  def test_it_finds_all_by_rest
+    a = setup
+    actual = a.find_all_by_result("success")
+
+    assert_equal 1, actual[0].id
+    assert_equal 4158, actual.length
+  end
+
+  def test_it_finds_all_by_rest_again
+    a = setup
+    actual = a.find_all_by_result("failed")
+
+    assert_equal 9, actual[0].id
+    assert_equal 827, actual.length
+  end
+
+  def test_it_finds_all_by_rest_again_with_non_match
+    a = setup
+    actual = a.find_all_by_result("tacos!")
+
+    assert_equal [], actual
+  end
 end
