@@ -18,4 +18,8 @@ class Merchant
 	def invoices
 		mr.pass_to_se_invoices(id)
 	end
+
+	def customers
+		mr.get_customers_from_se(id).uniq
+	end
 end

@@ -6,6 +6,10 @@ class InvoiceItemRepository
   attr_reader :contents,
               :all,
               :se
+  
+  # def inspect
+	# 	"#<#{self.class} #{@invoices.size} rows>"
+	# end
 
   def initialize(invoice_item_info, se)
     @se = se
@@ -42,4 +46,11 @@ class InvoiceItemRepository
 		end
 		return invoice
 	end
+
+  def find_all_items_by_invoice_id(id)
+    items = (find_all_by_invoice_id(id)).map do |inv_item|
+      se.items.find_by_id(inv_item.item_id)
+    end
+    items
+  end
 end

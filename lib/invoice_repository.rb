@@ -15,7 +15,7 @@ class InvoiceRepository
 	end
 
 	# def inspect
-		# "#<#{self.class} #{@invoices.size} rows>"
+	# 	"#<#{self.class} #{@invoices.size} rows>"
 	# end
 
 	def read_lines
@@ -58,4 +58,19 @@ class InvoiceRepository
 		se.find_merchant_by_item_id(merchant_id)
 	end
 
+	def get_items_from_se(id)
+    se.find_items_by_invoice_id_1(id)
+	end
+
+	def get_transactions_from_se(id)
+    se.find_transactions_by_invoice_id(id)
+	end
+
+	def get_customer_from_se(id)
+		se.find_customer_by_customer_id(id)
+	end
+
+	def get_invoice_items_from_se(id)
+		se.find_invoice_items_by_invoice_id(id)
+	end
 end

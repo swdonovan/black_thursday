@@ -1,5 +1,6 @@
 require_relative 'test_helper'
 require_relative '../lib/sales_engine'
+require 'time'
 require 'pry'
 
 
@@ -7,11 +8,14 @@ class SalesEngineTest < Minitest::Test
 
 	def setup
 		@se_uno = SalesEngine.from_csv({
-		  :items     => 'data/items.csv',
-		  :merchants => 'data/merchants.csv',
-			:invoices  => 'data/invoices.csv'
-		})
-		#
+			:items         => "./data/items.csv",
+		  :merchants     => "./data/merchants.csv",
+		  :invoices      => "./data/invoices.csv",
+		  :invoice_items => "./data/invoice_items.csv",
+		  :transactions  => "./data/transactions.csv",
+		  :customers     => "./data/customers.csv"
+			})
+
 		# @se_file = SalesEngine.from_csv({
 		# 	:item => ARGV[0],
 		# 	:merchants => ARGV[1],
@@ -33,6 +37,26 @@ class SalesEngineTest < Minitest::Test
 	def test_items_method_inits
 		actual = @se_uno
 		assert_instance_of ItemRepository, actual.items
+	end
+
+	def test_invoices_method_inits
+		actual = @se_uno
+		assert_instance_of InvoiceRepository, actual.invoices
+	end
+
+	def test_invoice_items_method_inits
+		actual = @se_uno
+		assert_instance_of InvoiceItemRepository, actual.invoice_items
+	end
+
+	def test_transactions_method_inits
+		actual = @se_uno
+		assert_instance_of TransactionRepository, actual.transactions
+	end
+
+	def test_customers_method_inits
+		actual = @se_uno
+		assert_instance_of CustomerRepository, actual.customers
 	end
 
 	def test_items_methods_pass_through
@@ -301,5 +325,126 @@ class SalesEngineTest < Minitest::Test
 		expected = "RnRGuitarPicks"
 
 		assert_equal expected, actual.name
+	end
+
+	def test_can_find_items_from_invoice_id
+		a = @se_uno
+		b = a.invoices.find_by_id(20)
+		actual = b.items
+		expected = Array
+
+		assert_equal expected, actual.class
+		assert_equal 5, actual.length
+		assert_equal Item, actual[1].class
+		assert_equal Item, actual[4].class
+		assert_equal "Magick Pain Lotion/Body Butter 1.5 oz", actual[1].name
+		assert_equal "Hand Painted Confetti Wine Glass", actual[4].name
+	end
+
+	def test_can_find_transactions_from_invoice_id
+		a = @se_uno
+		b = a.invoices.find_by_id(20)
+		actual = b.transactions
+		expected = Array
+
+		assert_equal expected, actual.class
+		assert_equal 3, actual.length
+		assert_equal Transaction, actual[1].class
+		assert_equal Transaction, actual[2].class
+		assert_equal "4363584547318205", actual[1].credit_card_number.to_s
+		assert_equal "success", actual[2].result
+	end
+
+	def test_can_find_transactions_from_invoice_id_again
+		a = @se_uno
+		b = a.invoices.find_by_id(203)
+		actual = b.transactions
+		expected = Array
+
+		assert_equal expected, actual.class
+		assert_equal 0, actual.length
+		assert_equal [], actual
+	end
+
+	def test_can_find_customer_from_invoice_id
+		a = @se_uno
+		b = a.invoices.find_by_id(20)
+		actual = b.customer
+		expected = Customer
+
+		assert_equal expected, actual.class
+		assert_equal "Sylvester", actual.first_name
+		assert_equal "Nader", actual.last_name
+	end
+
+	def test_can_find_customer_from_invoice_id
+		a = @se_uno
+		b = a.invoices.find_by_id(3)
+		actual = b.customer
+		expected = Customer
+
+		assert_equal expected, actual.class
+		assert_equal "Joey", actual.first_name
+		assert_equal "Ondricka", actual.last_name
+	end
+
+	def test_can_find_invoice_from_invoice_id_in_transactions
+		a = @se_uno
+		b = a.transactions.find_by_id(40)
+		actual = b.invoice
+		expected = Invoice
+
+		assert_equal expected, actual.class
+		assert_equal 3, actual.customer_id
+		assert_equal :pending, actual.status
+	end
+
+	def test_can_find_customers_from_merchant_id_in_merchants
+		a = @se_uno
+		b = a.merchants.find_by_id(12335938)
+		actual = b.customers
+		expected = Array
+
+		assert_equal expected, actual.class
+		assert_equal 16, actual.length
+		assert_equal Customer, actual[0].class
+		assert_equal "Joey", actual[0].first_name
+	end
+
+	def test_can_find_merchants_from_customer_id_in_customers
+		a = @se_uno
+		b = a.customers.find_by_id(30)
+		actual = b.merchants
+		expected = Array
+
+		assert_equal expected, actual.class
+		assert_equal 5, actual.length
+		assert_equal Merchant, actual[0].class
+		assert_equal "SweetheartDarling", actual[0].name
+		assert_equal "thepurplepenshop", actual[4].name
+	end
+
+	def test_an_invoice_can_check_if_it_is_paid_in_full
+		a = @se_uno
+		b = a.invoices.find_by_id(20)
+		actual = b.is_paid_in_full?
+
+		assert actual
+	end
+
+	def test_an_invoice_can_check_if_it_is_paid_in_full_and_be_false
+		a = @se_uno
+		b = a.invoices.find_by_id(3560)
+		actual = b.is_paid_in_full?
+
+		refute actual
+	end
+
+	def test_an_invoice_can_check_if_it_is_paid_in_full_and_be_false_again
+		a = @se_uno
+		b = a.invoices.find_by_id(203)
+		actual = b.is_paid_in_full?
+
+		refute actual
 	end
 end
