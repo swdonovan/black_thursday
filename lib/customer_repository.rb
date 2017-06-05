@@ -6,10 +6,10 @@ class CustomerRepository
   attr_reader :contents,
               :all,
               :se
-  #
-  def inspect
-		"#<#{self.class} #{@invoices.size} rows>"
-	end
+  
+  # def inspect
+	# 	"#<#{self.class} #{@invoices.size} rows>"
+	# end
 
   def initialize(customer_info, se)
     @se = se

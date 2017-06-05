@@ -50,5 +50,33 @@ class Invoice
 	end
 
 	def total
+		to_calc = get_invoice_items(find_successful_transactions)
+		find_total_unit_cost(to_calc).uniq.shift
 	end
+
+	def find_successful_transactions
+		transactions.each do |unpaid|
+			transactions.delete(unpaid) if unpaid.result == "failed"
+		end
+	end
+
+	def get_invoice_items(list)
+		all_items = []
+    list.map do |transaction|
+		  all_items << (inv.get_invoice_items_from_se(transaction.invoice_id))
+		end
+		all_items
+	end
+
+	def find_total_unit_cost(list)
+		list.map! do |inv_item_group|
+      # inv_item_group[0].class
+			transactionception_level_1(inv_item_group)
+    end
+	end
+
+	def transactionception_level_1(array)
+		array.inject(0) {|sum, paid| sum + (paid.unit_price * paid.quantity)}
+	end
+
 end

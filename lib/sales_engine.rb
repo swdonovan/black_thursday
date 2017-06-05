@@ -77,6 +77,10 @@ class SalesEngine
 		end
     list_of_merchants
 	end
+
+	def find_invoice_items_by_invoice_id(id)
+		invoice_items.find_all_by_invoice_id(id)
+	end
 end
 
 # se = SalesEngine.from_csv({
