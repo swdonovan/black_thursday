@@ -59,6 +59,17 @@ class SalesEngine
 	def find_invoice_by_invoice_id(id)
 		invoices.find_by_id(id)
 	end
+
+	def find_customers_by_merchant_id(id)
+		merch_invoices = invoices.find_all_by_merchant_id(id)
+		merch_invoices.group_by do |invoice|
+			customers_first_name(invoice.customer)
+		end
+	end
+
+	def customers_first_name(customer)
+		customer.first_name
+	end
 end
 
 # se = SalesEngine.from_csv({

@@ -387,4 +387,16 @@ class SalesEngineTest < Minitest::Test
 		assert_equal 3, actual.customer_id
 		assert_equal :pending, actual.status
 	end
+
+	def test_can_find_customers_from_merchant_id_in_merchants
+		a = @se_uno
+		b = a.merchants.find_by_id(12335938)
+		actual = b.customers
+		expected = Hash
+
+		assert_equal expected, actual.class
+		assert_equal Array, actual["Joey"].class
+		assert_equal 1, actual["Joey"].length
+		assert_equal "2009-02-07 00:00:00 -0700", actual["Joey"][0].created_at.to_s
+	end
 end

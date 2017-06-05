@@ -65,4 +65,7 @@ class MerchantRepository
 		se.find_invoice_by_merchant_id(id)
 	end
 
+	def get_customers_from_se(id)
+		se.find_customers_by_merchant_id(id)
+	end
 end
