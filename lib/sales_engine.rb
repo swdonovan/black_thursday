@@ -1,18 +1,27 @@
 require_relative 'merchant_repository'
 require_relative 'item_repository'
 require_relative 'invoice_repository'
+require_relative 'invoice_item_repository'
+require_relative 'transaction_repository'
+require_relative 'customer_repository'
 require 'csv'
 require 'pry'
 #
 class SalesEngine
 	attr_reader :merchants,
 							:items,
-							:invoices
+							:invoices,
+							:invoice_items,
+							:transactions,
+							:customers
 
 	def initialize(argv_values)
-		@merchants = MerchantRepository.new(argv_values[:merchants], self)
-		@items     = ItemRepository.new(argv_values[:items], self)
-		@invoices  = InvoiceRepository.new(argv_values[:invoices], self)
+		@merchants      = MerchantRepository.new(argv_values[:merchants], self)
+		@items          = ItemRepository.new(argv_values[:items], self)
+		@invoices       = InvoiceRepository.new(argv_values[:invoices], self)
+		@invoice_items  = InvoiceItemRepository.new(argv_values[:invoice_items], self)
+		@transactions   = TransactionRepository.new(argv_values[:transactions], self)
+		@customers      = CustomerRepository.new(argv_values[:customers], self)
 	end
 
 	def self.from_csv(argv_values)

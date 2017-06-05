@@ -1,5 +1,6 @@
 require_relative 'test_helper'
 require_relative '../lib/sales_engine'
+require 'time'
 require 'pry'
 
 
@@ -7,10 +8,13 @@ class SalesEngineTest < Minitest::Test
 
 	def setup
 		@se_uno = SalesEngine.from_csv({
-		  :items     => 'data/items.csv',
-		  :merchants => 'data/merchants.csv',
-			:invoices  => 'data/invoices.csv'
-		})
+			:items         => "./data/items.csv",
+		  :merchants     => "./data/merchants.csv",
+		  :invoices      => "./data/invoices.csv",
+		  :invoice_items => "./data/invoice_items.csv",
+		  :transactions  => "./data/transactions.csv",
+		  :customers     => "./data/customers.csv"
+			})
 		#
 		# @se_file = SalesEngine.from_csv({
 		# 	:item => ARGV[0],
@@ -33,6 +37,26 @@ class SalesEngineTest < Minitest::Test
 	def test_items_method_inits
 		actual = @se_uno
 		assert_instance_of ItemRepository, actual.items
+	end
+
+	def test_invoices_method_inits
+		actual = @se_uno
+		assert_instance_of InvoiceRepository, actual.invoices
+	end
+
+	def test_invoice_items_method_inits
+		actual = @se_uno
+		assert_instance_of InvoiceItemRepository, actual.invoice_items
+	end
+
+	def test_transactions_method_inits
+		actual = @se_uno
+		assert_instance_of TransactionRepository, actual.transactions
+	end
+
+	def test_customers_method_inits
+		actual = @se_uno
+		assert_instance_of CustomerRepository, actual.customers
 	end
 
 	def test_items_methods_pass_through
