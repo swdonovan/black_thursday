@@ -20,6 +20,6 @@ class Merchant
 	end
 
 	def customers
-		mr.get_customers_from_se(id)
+		mr.get_customers_from_se(id).uniq
 	end
 end

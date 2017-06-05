@@ -355,6 +355,17 @@ class SalesEngineTest < Minitest::Test
 		assert_equal "success", actual[2].result
 	end
 
+	def test_can_find_transactions_from_invoice_id_again
+		a = @se_uno
+		b = a.invoices.find_by_id(203)
+		actual = b.transactions
+		expected = Array
+
+		assert_equal expected, actual.class
+		assert_equal 0, actual.length
+		assert_equal [], actual
+	end
+
 	def test_can_find_customer_from_invoice_id
 		a = @se_uno
 		b = a.invoices.find_by_id(20)

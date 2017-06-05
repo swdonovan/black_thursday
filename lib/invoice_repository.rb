@@ -14,9 +14,9 @@ class InvoiceRepository
     read_lines
 	end
 
-	# def inspect
-	# 	"#<#{self.class} #{@invoices.size} rows>"
-	# end
+	def inspect
+		"#<#{self.class} #{@invoices.size} rows>"
+	end
 
 	def read_lines
 		@all = @contents.map do |row|

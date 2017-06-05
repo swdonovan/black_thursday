@@ -14,9 +14,9 @@ class ItemRepository
     read_lines
 	end
   #
-  # def inspect
-  #   "#<#{self.class} #{@items.size} rows>"
-  # end
+  def inspect
+    "#<#{self.class} #{@items.size} rows>"
+  end
 
   def read_lines
     @all = @contents.map do |row|
