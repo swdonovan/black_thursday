@@ -16,15 +16,6 @@ class SalesEngineTest < Minitest::Test
 		  :customers     => "./data/customers.csv"
 			})
 
-		# @se_dos = SalesEngine.from_csv({
-		# 	:items         => "./test/data/items.csv",
-		#   :merchants     => "./test/data/merchants.csv",
-		#   :invoices      => "./test/data/invoices.csv",
-		#   :invoice_items => "./test/data/invoice_items.csv",
-		#   :transactions  => "./test/data/transactions.csv",
-		#   :customers     => "./test/data/customers.csv"
-		# 	})
-		#
 		# @se_file = SalesEngine.from_csv({
 		# 	:item => ARGV[0],
 		# 	:merchants => ARGV[1],
@@ -364,7 +355,7 @@ class SalesEngineTest < Minitest::Test
 		assert_equal "success", actual[2].result
 	end
 
-	def test_can_find_transactions_from_invoice_id
+	def test_can_find_customer_from_invoice_id
 		a = @se_uno
 		b = a.invoices.find_by_id(20)
 		actual = b.customer
@@ -375,7 +366,7 @@ class SalesEngineTest < Minitest::Test
 		assert_equal "Nader", actual.last_name
 	end
 
-	def test_can_find_transactions_from_invoice_id
+	def test_can_find_customer_from_invoice_id
 		a = @se_uno
 		b = a.invoices.find_by_id(3)
 		actual = b.customer
@@ -384,5 +375,16 @@ class SalesEngineTest < Minitest::Test
 		assert_equal expected, actual.class
 		assert_equal "Joey", actual.first_name
 		assert_equal "Ondricka", actual.last_name
+	end
+
+	def test_can_find_invoice_from_invoice_id_in_transactions
+		a = @se_uno
+		b = a.transactions.find_by_id(40)
+		actual = b.invoice
+		expected = Invoice
+
+		assert_equal expected, actual.class
+		assert_equal 3, actual.customer_id
+		assert_equal :pending, actual.status
 	end
 end

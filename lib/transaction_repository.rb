@@ -49,4 +49,8 @@ class TransactionRepository
 		end
 		return transaction
 	end
+
+  def get_invoice_from_se(id)
+    se.find_invoice_by_invoice_id(id)
+  end
 end

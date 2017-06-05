@@ -21,4 +21,8 @@ class Transaction
     @credit_card_expiration_date = transactions_info[:credit_card_expiration_date]
     @result                      = transactions_info[:result]
   end
+
+  def invoice
+    tr.get_invoice_from_se(invoice_id)
+  end
 end
