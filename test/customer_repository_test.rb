@@ -23,4 +23,28 @@ class CustomerRepositoryTest < Minitest::Test
     assert_equal "Langworth", actual[999].last_name
     assert_equal 46, actual[45].id
   end
+
+  def test_it_can_find_by_id
+		a = setup
+		actual = a.find_by_id(6)
+		expected = "Heber"
+
+		assert_instance_of Customer, actual
+		assert_equal Time, actual.created_at.class
+		assert_equal expected, actual.first_name
+	end
+
+  def test_find_id_if_nil
+		a = setup
+		actual = a.find_by_id(nil)
+
+		assert_nil actual
+	end
+
+	def test_if_number_doesnt_exsist
+		a = setup
+		actual = a.find_by_id(1000005000)
+
+		assert_nil actual
+	end
 end

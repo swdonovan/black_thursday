@@ -21,4 +21,11 @@ class CustomerRepository
 
     return all
   end
+
+  def find_by_id(id)
+    customer = all.select do |instance|
+      instance if instance.id == id
+    end
+    return customer.shift
+  end
 end
