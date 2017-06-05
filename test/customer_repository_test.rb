@@ -47,4 +47,43 @@ class CustomerRepositoryTest < Minitest::Test
 
 		assert_nil actual
 	end
+
+  def test_it_finds_all_by_first
+		a = setup
+		actual = a.find_all_by_first_name("Felipe")
+
+		assert_equal 21, actual[0].id
+		assert_equal 1, actual.length
+	end
+
+  def test_it_finds_all_by_first_name_again
+		a = setup
+		actual = a.find_all_by_first_name("Joey")
+
+		assert_equal 1, actual[0].id
+		assert_equal 1, actual.length
+	end
+
+  def test_it_finds_all_by_last
+		a = setup
+		actual = a.find_all_by_last_name("Frami")
+
+		assert_equal 427, actual[0].id
+		assert_equal 4, actual.length
+	end
+
+  def test_it_finds_all_by_last_name_again
+		a = setup
+		actual = a.find_all_by_last_name("Funk")
+
+		assert_equal 167, actual[0].id
+		assert_equal 2, actual.length
+	end
+
+  def test_it_finds_all_by_last_name_again_with_non_match
+    a = setup
+    actual = a.find_all_by_last_name("tacos!")
+
+    assert_equal [], actual
+  end
 end

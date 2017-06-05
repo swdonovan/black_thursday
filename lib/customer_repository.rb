@@ -28,4 +28,18 @@ class CustomerRepository
     end
     return customer.shift
   end
+
+  def find_all_by_first_name(first_name)
+		customer = all.select do |instance|
+			instance if instance.first_name == first_name
+		end
+		return customer
+	end
+
+  def find_all_by_last_name(last_name)
+		customer = all.select do |instance|
+			instance if instance.last_name == last_name
+		end
+		return customer
+	end
 end
