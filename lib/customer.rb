@@ -25,4 +25,8 @@ class Customer
   def invoices
     cst.get_invoices_for_customer_id(id)
   end
+
+  def invoice_items
+    cst.get_invoice_items
+  end
 end

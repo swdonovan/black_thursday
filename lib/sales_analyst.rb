@@ -180,7 +180,6 @@ class SalesAnalyst
 		bottom_count
 	end
 
-
 	def top_days_by_invoice_count
 		grouped_inv = date_group_invoices
 		std_dev = days_of_the_week_standard_deviation(grouped_inv)
@@ -242,19 +241,27 @@ class SalesAnalyst
 	def sort_invoices_by_total
 		all_customers = se.customers.all
 		total_invoice_sum = all_customers.sort_by do |customer|
-			sum_invoices(customer.invoices)
+			paid_in_full_check(customer.invoices)
 		end
 		total_invoice_sum = total_invoice_sum.reverse
 	end
 
-	def top_customers(total_invoice_sum, x)
-		total_invoice_sum[0..(x.to_i - 1)].map do |customer|
-			customer.first_name + " " + customer.last_name
+	def paid_in_full_check(invoices)
+		paid_invoices= invoices.each do |invoice|
+			invoices.delete(invoice) if invoice.is_paid_in_full? == false
 		end
+		sum_invoices(paid_invoices)
+	end
+
+	def top_customers(total_invoice_sum, x)
+		total_invoice_sum[0..(x.to_i - 1)]
 	end
 
 	def sum_invoices(invoices)
 		var = invoices.inject(0) do |sum, invoice|
+			# binding.pry
+			# invoice.status != :returned ? sum + invoice.total.to_f :
+			#  sum
 			sum + invoice.total.to_f
 		end
 	end
@@ -271,7 +278,7 @@ class SalesAnalyst
 			sum_invoice_quantity(grouped[key])
 		end
 		sorted_qty = sorted_qty.reverse
-		se.merchants.find_by_id(sorted_qty[0]).name
+		se.merchants.find_by_id(sorted_qty[0])
 	end
 
 	def group_invoices_by_merchant(inv)
@@ -288,16 +295,7 @@ class SalesAnalyst
 
 	def one_time_buyers
     # invoices = find_single_invoice_customers(se.customers.all)
-		# transaction_count(find_single_invoice_customers(se.customers.all)).length
-		hash_of_customer = se.invoices.all.group_by do |invoice|
-			invoice.customer_id
-		end
-		balls = hash_of_customer.keys.select do |customer|
-			hash_of_customer[customer].length == 1
-		end
-		ballers = balls.select do |ball|
-			hash_of_customer[ball][0].transactions.length == 1
-		end
+		transaction_count(find_single_invoice_customers(se.customers.all))
 	end
 
 	def find_single_invoice_customers(customers)

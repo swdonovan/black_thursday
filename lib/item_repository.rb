@@ -13,10 +13,10 @@ class ItemRepository
 		@contents = CSV.open item_info, headers: true, header_converters: :symbol
     read_lines
 	end
-  
-  # def inspect
-  #   "#<#{self.class} #{@items.size} rows>"
-  # end
+
+  def inspect
+    "#<#{self.class} #{@items.size} rows>"
+  end
 
   def read_lines
     @all = @contents.map do |row|

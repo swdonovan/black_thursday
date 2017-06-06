@@ -7,9 +7,9 @@ class TransactionRepository
               :all,
               :se
 
-  # def inspect
-	# 	"#<#{self.class} #{@invoices.size} rows>"
-	# end
+  def inspect
+		"#<#{self.class} #{@invoices.size} rows>"
+	end
 
   def initialize(transaction_info, se)
     @se = se

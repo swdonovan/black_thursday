@@ -15,9 +15,9 @@ class MerchantRepository
 		read_lines
 	end
 
-	# def inspect
-  #   "#<#{self.class} #{@merchants.size} rows>"
-  # end
+	def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
+  end
 
 	def open_file(merchant_info)
 		@contents = CSV.open merchant_info, headers: true, header_converters: :symbol

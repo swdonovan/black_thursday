@@ -10,7 +10,7 @@ def setup
 	  :items     => './test/data/items_fixture.csv',
 	  :merchants => './data/merchants.csv',
 		:invoices   => './test/data/invoice_fixture.csv',
-		:invoice_items => "./test/data/invoice_items_fixture.csv",
+		:invoice_items => "./data/invoice_items.csv",
 		:transactions  => "./test/data/transactions_fixture.csv",
 		:customers     => "./test/data/customers_fixture.csv"
 	})

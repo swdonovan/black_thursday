@@ -42,7 +42,7 @@ class Invoice
 		payment_status = transactions
 		if payment_status == []
 		  false
-	  elsif payment_status.all? { |e| e.result == "success"}
+	  elsif payment_status.any? { |e| e.result == "success"}
 			true
 		else
 			false

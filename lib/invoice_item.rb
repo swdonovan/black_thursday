@@ -31,4 +31,8 @@ class InvoiceItem
   def unit_price_to_dollars
     @unit_price.to_f
   end
+
+  def transaction
+    ii.pass_to_se()
+  end
 end
