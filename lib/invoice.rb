@@ -80,16 +80,20 @@ class Invoice
 
 	def total_quantity
 		to_calc = get_invoice_items(find_successful_transactions)
-		find_total_invoice_quantity(to_calc).uniq.shift
+		to_calc = to_calc.flatten
+		find_total_invoice_quantity(to_calc)
 	end
+
+	# def find_total_invoice_quantity(list)
+	# 	list.map! do |inv_item_group|
+	# 		binding.pry
+	# 		transactionception_level_2(inv_item_group)
+	# 	end
+	# end
 
 	def find_total_invoice_quantity(list)
-		list.map! do |inv_item_group|
-			transactionception_level_2(inv_item_group)
+		list.inject(0) do |sum, paid|
+			sum + (paid.quantity)
 		end
-	end
-
-	def transactionception_level_2(array)
-		array.inject(0) {|sum, paid| sum + (paid.quantity)}
 	end
 end
