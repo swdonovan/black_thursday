@@ -339,14 +339,13 @@ end
 		expected = ['harry']
 
 		assert_equal expected, actual
-		assert_equal 3, actual.length
 	end
 
-	def test_it_can_find_one_time_buyers_length
-		a = SalesAnalyst.new(@sales_engine_dos)
-		actual = a.one_time_buyers
-
-		assert_equal 3, actual.length
-	end
+	# def test_it_can_find_one_time_buyers_length
+	# 	a = SalesAnalyst.new(@sales_engine_dos)
+	# 	actual = a.one_time_buyers
+	#
+	# 	assert_equal 3, actual.length
+	# end
 
 end

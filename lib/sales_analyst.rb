@@ -286,6 +286,34 @@ class SalesAnalyst
 		end
 	end
 
+	def one_time_buyers
+    # invoices = find_single_invoice_customers(se.customers.all)
+		# transaction_count(find_single_invoice_customers(se.customers.all)).length
+		hash_of_customer = se.invoices.all.group_by do |invoice|
+			invoice.customer_id
+		end
+		balls = hash_of_customer.keys.select do |customer|
+			hash_of_customer[customer].length == 1
+		end
+		ballers = balls.select do |ball|
+			hash_of_customer[ball][0].transactions.length == 1
+		end
+	end
+
+	def find_single_invoice_customers(customers)
+		cust = []
+		customers.map do |customer|
+			cust << customer.invoices if customer.invoices.length == 1
+		end
+		cust.flatten
+	end
+
+	def transaction_count(invoices)
+		invoices.select do |invoice|
+			invoice.transactions.length == 1
+		end
+	end
+
 end
 # @sales_engine_dos = SalesEngine.from_csv({
 # 	:items     => './data/items.csv',
