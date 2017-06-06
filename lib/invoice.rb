@@ -65,7 +65,7 @@ class Invoice
     list.map do |transaction|
 		  all_items << (inv.get_invoice_items_from_se(transaction.invoice_id))
 		end
-		all_items
+		all_items.uniq
 	end
 
 	def find_total_unit_cost(list)
@@ -94,6 +94,17 @@ class Invoice
 	def find_total_invoice_quantity(list)
 		list.inject(0) do |sum, paid|
 			sum + (paid.quantity)
+		end
+	end
+
+	def fully_paid?
+		payment_status = transactions
+		if payment_status == []
+		  true
+	  elsif payment_status.any? { |e| e.result == "success"}
+			true
+		else
+			false
 		end
 	end
 end

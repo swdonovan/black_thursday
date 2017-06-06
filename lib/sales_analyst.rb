@@ -238,6 +238,11 @@ class SalesAnalyst
 		all_customers = top_customers(sort_invoices_by_total, x)
 	end
 
+	def top_customers(total_invoice_sum, x)
+
+		total_invoice_sum[0..(x.to_i - 1)]
+	end
+
 	def sort_invoices_by_total
 		all_customers = se.customers.all
 		total_invoice_sum = all_customers.sort_by do |customer|
@@ -248,20 +253,13 @@ class SalesAnalyst
 
 	def paid_in_full_check(invoices)
 		paid_invoices= invoices.each do |invoice|
-			invoices.delete(invoice) if invoice.is_paid_in_full? == false
+			invoices.delete(invoice) if invoice.fully_paid? == false
 		end
 		sum_invoices(paid_invoices)
 	end
 
-	def top_customers(total_invoice_sum, x)
-		total_invoice_sum[0..(x.to_i - 1)]
-	end
-
 	def sum_invoices(invoices)
 		var = invoices.inject(0) do |sum, invoice|
-			# binding.pry
-			# invoice.status != :returned ? sum + invoice.total.to_f :
-			#  sum
 			sum + invoice.total.to_f
 		end
 	end
@@ -275,7 +273,7 @@ class SalesAnalyst
 
 	def top_merchant(grouped)
 		sorted_qty = grouped.keys.sort_by do |key|
-			sum_invoice_quantity(grouped[key])
+			key = [sum_invoice_quantity(grouped[key])]
 		end
 		sorted_qty = sorted_qty.reverse
 		se.merchants.find_by_id(sorted_qty[0])
