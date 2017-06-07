@@ -341,6 +341,28 @@ class SalesAnalyst
 		end
 		paid_check
 	end
+
+	def best_invoice_by_revenue
+		invoice_list = se.invoices.all
+		invoice_totals = invoice_list.map do |invoice|
+			invoice.total.to_f
+		end
+		top_invoice = invoice_list.select do |invoice|
+			invoice.total.to_f == invoice_totals.max
+		end
+		top_invoice.pop
+	end
+
+	def best_invoice_by_quantity
+		invoice_list = se.invoices.all
+		invoice_totals = invoice_list.map do |invoice|
+			invoice.total_quantity
+		end
+		top_invoice = invoice_list.select do |invoice|
+			invoice.total_quantity == invoice_totals.max
+		end
+		top_invoice.shift
+	end
 end
 # @sales_engine_dos = SalesEngine.from_csv({
 # 	:items     => './data/items.csv',

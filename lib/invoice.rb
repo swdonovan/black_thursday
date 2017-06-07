@@ -30,6 +30,10 @@ class Invoice
 		inv.get_items_from_se(id)
 	end
 
+	def invoice_items
+		inv.get_invoice_items_from_se(id)
+	end
+
 	def transactions
 		inv.get_transactions_from_se(id)
 	end
