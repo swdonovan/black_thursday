@@ -328,12 +328,11 @@ class SalesAnalyst
 	end
 
 	def customers_with_unpaid_invoices
-		customers = se.customers.all
-		
-		invoices = customers.map! do |customers|
-			customers.invoices
+		customer_list = se.customers.all
+
+		customer_list.select do |customer|
+			customer.invoices.any? {|invoice| invoice.is_paid_in_full? == false}
 		end
-		paid_check(invoices)
 	end
 
 	def paid_check(invoices)
