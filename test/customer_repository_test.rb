@@ -25,60 +25,60 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_by_id
-		a = setup
-		actual = a.find_by_id(6)
-		expected = "Heber"
+    a = setup
+    actual = a.find_by_id(6)
+    expected = "Heber"
 
-		assert_instance_of Customer, actual
-		assert_equal Time, actual.created_at.class
-		assert_equal expected, actual.first_name
-	end
+    assert_instance_of Customer, actual
+    assert_equal Time, actual.created_at.class
+    assert_equal expected, actual.first_name
+  end
 
   def test_find_id_if_nil
-		a = setup
-		actual = a.find_by_id(nil)
+    a = setup
+    actual = a.find_by_id(nil)
 
-		assert_nil actual
-	end
+    assert_nil actual
+  end
 
-	def test_if_number_doesnt_exsist
-		a = setup
-		actual = a.find_by_id(1000005000)
+  def test_if_number_doesnt_exsist
+    a = setup
+    actual = a.find_by_id(1000005000)
 
-		assert_nil actual
-	end
+    assert_nil actual
+  end
 
   def test_it_finds_all_by_first
-		a = setup
-		actual = a.find_all_by_first_name("Felipe")
+    a = setup
+    actual = a.find_all_by_first_name("Felipe")
 
-		assert_equal 21, actual[0].id
-		assert_equal 1, actual.length
-	end
+    assert_equal 21, actual[0].id
+    assert_equal 1, actual.length
+  end
 
   def test_it_finds_all_by_first_name_again
-		a = setup
-		actual = a.find_all_by_first_name("Joey")
+    a = setup
+    actual = a.find_all_by_first_name("Joey")
 
-		assert_equal 1, actual[0].id
-		assert_equal 1, actual.length
-	end
+    assert_equal 1, actual[0].id
+    assert_equal 1, actual.length
+  end
 
   def test_it_finds_all_by_last
-		a = setup
-		actual = a.find_all_by_last_name("Frami")
+    a = setup
+    actual = a.find_all_by_last_name("Frami")
 
-		assert_equal 427, actual[0].id
-		assert_equal 4, actual.length
-	end
+    assert_equal 427, actual[0].id
+    assert_equal 4, actual.length
+  end
 
   def test_it_finds_all_by_last_name_again
-		a = setup
-		actual = a.find_all_by_last_name("Funk")
+    a = setup
+    actual = a.find_all_by_last_name("Funk")
 
-		assert_equal 167, actual[0].id
-		assert_equal 2, actual.length
-	end
+    assert_equal 167, actual[0].id
+    assert_equal 2, actual.length
+  end
 
   def test_it_finds_all_by_last_name_again_with_non_match
     a = setup

@@ -48,23 +48,23 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_shows_changed_id_after_find_merch_id
-		a = setup
-		b = a.find_by_id("12337411")
-		actual = b
+    a = setup
+    b = a.find_by_id("12337411")
+    actual = b
 
-		assert_nil actual
-	end
+    assert_nil actual
+  end
 
   def test_it_finds_id
-		a = setup
-		b = a.find_by_id("263395237")
-		expected = 263395237
-		actual = b.id
+    a = setup
+    b = a.find_by_id("263395237")
+    expected = 263395237
+    actual = b.id
 
-		assert_equal expected, actual
+    assert_equal expected, actual
     assert_equal "510+ RealPush Icon Set", b.name
     assert_equal Item, b.class
-	end
+  end
 
   def test_it_shows_changed_id_after_find_item_id
     a = setup

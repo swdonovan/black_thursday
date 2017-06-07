@@ -5,14 +5,14 @@ require_relative 'item'
 class ItemRepository
 
   attr_reader :contents,
-              :all,
-              :se
+  :all,
+  :se
 
   def initialize(item_info, se)
     @se = se
-		@contents = CSV.open item_info, headers: true, header_converters: :symbol
+    @contents = CSV.open item_info, headers: true, header_converters: :symbol
     read_lines
-	end
+  end
 
   def inspect
     "#<#{self.class} #{@items.size} rows>"
@@ -27,13 +27,13 @@ class ItemRepository
   end
 
   def find_by_id(id)
-		id = id.to_i
-		item = nil
-		all.map do |instance|
-		 item = instance if id == instance.id
-		end
-		return item
-	end
+    id = id.to_i
+    item = nil
+    all.map do |instance|
+      item = instance if id == instance.id
+    end
+    return item
+  end
 
   def find_by_name(name)
     name = name.to_s.upcase
@@ -45,23 +45,23 @@ class ItemRepository
   end
 
   def find_all_with_description(segment)
-		@all.select do |item|
-			item.description.upcase.include?(segment.upcase)
-		end
-	end
+    @all.select do |item|
+      item.description.upcase.include?(segment.upcase)
+    end
+  end
 
   def find_all_by_price(amount)
     new_amount = amount.to_f
     @all.select do |price|
-			price.unit_price_to_dollars == new_amount
+      price.unit_price_to_dollars == new_amount
     end
   end
 
   def find_all_by_merchant_id(merchant_id)
-		all.find_all do |item|
-		  item.merchant_id == merchant_id.to_i
-		end
-	end
+    all.find_all do |item|
+      item.merchant_id == merchant_id.to_i
+    end
+  end
 
   def find_all_by_price_in_range(range)
     # range = convert_range(range)

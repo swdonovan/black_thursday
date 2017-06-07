@@ -11,7 +11,7 @@ class CustomerTest < Minitest::Test
       :last_name => "Clarke",
       :created_at => Time.now,
       :updated_at => Time.now
-    }, self)
+      }, self)
 
     @c_2 = Customer.new({
       :id => 6,
@@ -19,7 +19,7 @@ class CustomerTest < Minitest::Test
       :last_name => "Donovan",
       :created_at => Time.now,
       :updated_at => Time.now
-    }, self)
+      }, self)
 
     @c_3 = Customer.new({
       :id => 2,
@@ -27,7 +27,7 @@ class CustomerTest < Minitest::Test
       :last_name => "Shakira",
       :created_at => Time.now,
       :updated_at => Time.now
-    }, self)
+      }, self)
   end
 
   def test_it_exists

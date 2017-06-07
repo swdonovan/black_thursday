@@ -4,18 +4,18 @@ require 'time'
 
 class InvoiceItemRepository
   attr_reader :contents,
-              :all,
-              :se
+  :all,
+  :se
 
   def inspect
-		"#<#{self.class} #{@invoices.size} rows>"
-	end
+    "#<#{self.class} #{@invoices.size} rows>"
+  end
 
   def initialize(invoice_item_info, se)
     @se = se
-		@contents = CSV.open invoice_item_info, headers: true, header_converters: :symbol
+    @contents = CSV.open invoice_item_info, headers: true, header_converters: :symbol
     read_lines
-	end
+  end
 
   def read_lines
     @all = @contents.map do |row|
@@ -26,25 +26,25 @@ class InvoiceItemRepository
   end
 
   def find_by_id(id)
-		invoice = all.select do |instance|
-			instance if instance.id == id
-		end
-		return invoice.shift
-	end
+    invoice = all.select do |instance|
+      instance if instance.id == id
+    end
+    return invoice.shift
+  end
 
-	def find_all_by_item_id(item_id)
-		item = all.select do |instance|
-			instance if instance.item_id == item_id
-		end
-		return item
-	end
+  def find_all_by_item_id(item_id)
+    item = all.select do |instance|
+      instance if instance.item_id == item_id
+    end
+    return item
+  end
 
-	def find_all_by_invoice_id(invoice_id)
-		invoice = all.select do |instance|
-			instance if instance.invoice_id == invoice_id
-		end
-		return invoice
-	end
+  def find_all_by_invoice_id(invoice_id)
+    invoice = all.select do |instance|
+      instance if instance.invoice_id == invoice_id
+    end
+    return invoice
+  end
 
   def find_all_items_by_invoice_id(id)
     items = (find_all_by_invoice_id(id)).map do |inv_item|

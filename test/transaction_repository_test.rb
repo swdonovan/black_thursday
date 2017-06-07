@@ -25,60 +25,60 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_by_id
-		a = setup
-		actual = a.find_by_id(6)
-		expected = "success"
+    a = setup
+    actual = a.find_by_id(6)
+    expected = "success"
 
-		assert_instance_of Transaction, actual
-		assert_equal "0417", actual.credit_card_expiration_date
-		assert_equal expected, actual.result
-	end
+    assert_instance_of Transaction, actual
+    assert_equal "0417", actual.credit_card_expiration_date
+    assert_equal expected, actual.result
+  end
 
   def test_find_id_if_nil
-		a = setup
-		actual = a.find_by_id(nil)
+    a = setup
+    actual = a.find_by_id(nil)
 
-		assert_nil actual
-	end
+    assert_nil actual
+  end
 
-	def test_if_number_doesnt_exsist
-		a = setup
-		actual = a.find_by_id(1000005000)
+  def test_if_number_doesnt_exsist
+    a = setup
+    actual = a.find_by_id(1000005000)
 
-		assert_nil actual
-	end
+    assert_nil actual
+  end
 
   def test_it_finds_all_by_invoice_id
-		a = setup
-		actual = a.find_all_by_invoice_id(7)
+    a = setup
+    actual = a.find_all_by_invoice_id(7)
 
-		assert_equal 4916, actual[0].id
-		assert_equal 1, actual.length
-	end
+    assert_equal 4916, actual[0].id
+    assert_equal 1, actual.length
+  end
 
   def test_it_finds_all_by_invoice_id_again
-		a = setup
-		actual = a.find_all_by_invoice_id(750)
+    a = setup
+    actual = a.find_all_by_invoice_id(750)
 
-		assert_equal 3, actual[0].id
-		assert_equal 2, actual.length
-	end
+    assert_equal 3, actual[0].id
+    assert_equal 2, actual.length
+  end
 
   def test_it_finds_all_by_credit_card_number
-		a = setup
-		actual = a.find_all_by_credit_card_number("4890371279632775")
+    a = setup
+    actual = a.find_all_by_credit_card_number("4890371279632775")
 
-		assert_equal 20, actual[0].id
-		assert_equal 1, actual.length
-	end
+    assert_equal 20, actual[0].id
+    assert_equal 1, actual.length
+  end
 
   def test_it_finds_all_by_credit_card_number_again
-		a = setup
-		actual = a.find_all_by_credit_card_number("4841404241773918")
+    a = setup
+    actual = a.find_all_by_credit_card_number("4841404241773918")
 
-		assert_equal 237, actual[0].id
-		assert_equal 1, actual.length
-	end
+    assert_equal 237, actual[0].id
+    assert_equal 1, actual.length
+  end
 
   def test_it_finds_all_by_rest
     a = setup
