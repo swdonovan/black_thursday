@@ -20,8 +20,9 @@ class InvoiceRepository
 
   def read_lines
     @all = @contents.map do |row|
-      Invoice.new({:customer_id => row[1], :id => row[0], :merchant_id => row[2],
-        :status => row[3], :updated_at => row[5], :created_at => row[4]}, self)
+      Invoice.new({:customer_id => row[1], :id => row[0],
+                   :merchant_id => row[2], :status => row[3],
+                   :updated_at => row[5], :created_at => row[4]}, self)
     end
     return all
   end

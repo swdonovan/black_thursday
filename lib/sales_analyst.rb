@@ -301,16 +301,16 @@ class SalesAnalyst
       one_time[key].length == 1
     end
     binding.pry
-    # a = se.customers.all
-    # b = a.select do |customer|
-    # 	customer.invoices.all? {|invoice| invoice.is_paid_in_full? == true}
-    # end
-    # c = []
-    # 150.times do
-    # 	c << b.shift
-    # end
-    # c
-    # single_invoice_cust(find_single_trans_invoices(se.customers.all))
+    a = se.customers.all
+    b = a.select do |customer|
+      customer.invoices.all? {|invoice| invoice.is_paid_in_full? == true}
+    end
+    c = []
+    150.times do
+      c << b.shift
+    end
+    c
+    single_invoice_cust(find_single_trans_invoices(se.customers.all))
   end
 
   def one_time_buyers_top_items
@@ -398,13 +398,13 @@ class SalesAnalyst
   end
 end
 # @sales_engine_dos = SalesEngine.from_csv({
-# 	:items     => './data/items.csv',
-# 	:merchants => './data/merchants.csv',
-# 	:invoices   => './data/invoices.csv',
-# 	:invoice_items => "./data/invoice_items.csv",
-# 	:transactions  => "./data/transactions.csv",
-# 	:customers     => "./test/data/customers_fixture.csv"
-# })
-# #
+#   :items     => './data/items.csv',
+#   :merchants => './data/merchants.csv',
+#   :invoices   => './data/invoices.csv',
+#   :invoice_items => "./data/invoice_items.csv",
+#   :transactions  => "./data/transactions.csv",
+#   :customers     => "./test/data/customers_fixture.csv"
+#   })
+#   #
 # sa = SalesAnalyst.new(@sales_engine_dos)
 # sa.top_buyers(4)

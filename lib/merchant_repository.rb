@@ -20,7 +20,8 @@ class MerchantRepository
   end
 
   def open_file(merchant_info)
-    @contents = CSV.open merchant_info, headers: true, header_converters: :symbol
+    @contents = CSV.open merchant_info, headers: true,
+     header_converters: :symbol
   end
 
   def read_lines

@@ -21,7 +21,8 @@ class ItemRepository
   def read_lines
     @all = @contents.map do |row|
       Item.new({:name => row[1], :id => row[0], :description => row[2],
-        :unit_price => row[3], :created_at => row[5], :updated_at => row[6], :merchant_id => row[4]}, self)
+        :unit_price => row[3], :created_at => row[5], :updated_at => row[6],
+        :merchant_id => row[4]}, self)
     end
     return all
   end

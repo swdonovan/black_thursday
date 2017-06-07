@@ -13,14 +13,16 @@ class InvoiceItemRepository
 
   def initialize(invoice_item_info, se)
     @se = se
-    @contents = CSV.open invoice_item_info, headers: true, header_converters: :symbol
+    @contents = CSV.open invoice_item_info, headers: true,
+    header_converters: :symbol
     read_lines
   end
 
   def read_lines
     @all = @contents.map do |row|
       InvoiceItem.new({:item_id => row[1], :id => row[0], :invoice_id => row[2],
-        :quantity => row[3], :created_at => row[5], :updated_at => row[6], :unit_price => row[4]}, self)
+        :quantity => row[3], :created_at => row[5], :updated_at => row[6],
+        :unit_price => row[4]}, self)
     end
     return all
   end

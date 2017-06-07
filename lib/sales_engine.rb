@@ -15,13 +15,13 @@ class SalesEngine
   :transactions,
   :customers
 
-  def initialize(argv_values)
-    @merchants      = MerchantRepository.new(argv_values[:merchants], self)
-    @items          = ItemRepository.new(argv_values[:items], self)
-    @invoices       = InvoiceRepository.new(argv_values[:invoices], self)
-    @invoice_items  = InvoiceItemRepository.new(argv_values[:invoice_items], self)
-    @transactions   = TransactionRepository.new(argv_values[:transactions], self)
-    @customers      = CustomerRepository.new(argv_values[:customers], self)
+  def initialize(argv_val)
+    @merchants      = MerchantRepository.new(argv_val[:merchants], self)
+    @items          = ItemRepository.new(argv_val[:items], self)
+    @invoices       = InvoiceRepository.new(argv_val[:invoices], self)
+    @invoice_items  = InvoiceItemRepository.new(argv_val[:invoice_items], self)
+    @transactions   = TransactionRepository.new(argv_val[:transactions], self)
+    @customers      = CustomerRepository.new(argv_val[:customers], self)
   end
 
   def self.from_csv(argv_values)
@@ -86,28 +86,3 @@ class SalesEngine
     invoices.find_all_by_customer_id(id)
   end
 end
-
-# se = SalesEngine.from_csv({
-# 	:items     => ARGV[0],
-# 	:merchants => ARGV[1],
-# })
-#
-# merchant = se.merchants.all
-# item = se.items.all
-
-# def find_average(merchant)
-# 	top = setup_average(merchant).inject(0) {|sum, instance| sum + instance.length}
-# 	bottom = setup_average(merchant).length
-# 	average = top.to_f / bottom.to_f
-# 	average.round(2)
-# end
-#
-# def setup_average(merchant)
-# 	all_merchants = []
-# 		merchant.map do |merch|
-# 			all_merchants << merch.items
-# 		end
-# 	all_merchants
-# end
-
-# puts "the average number of items per merchant is #{find_average(merchant)}"

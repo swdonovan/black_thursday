@@ -13,7 +13,8 @@ class CustomerRepository
 
   def initialize(customer_info, se)
     @se = se
-    @contents = CSV.open customer_info, headers: true, header_converters: :symbol
+    @contents = CSV.open customer_info, headers: true,
+    header_converters: :symbol
     read_lines
   end
 

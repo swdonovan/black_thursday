@@ -88,13 +88,6 @@ class Invoice
     find_total_invoice_quantity(to_calc)
   end
 
-  # def find_total_invoice_quantity(list)
-  # 	list.map! do |inv_item_group|
-  # 		binding.pry
-  # 		transactionception_level_2(inv_item_group)
-  # 	end
-  # end
-
   def find_total_invoice_quantity(list)
     list.inject(0) do |sum, paid|
       sum + (paid.quantity)
