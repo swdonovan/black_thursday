@@ -27,6 +27,12 @@ class Customer
   end
 
   def invoice_items
-    cst.get_invoice_items
+    invoice_ids = invoices
+    invoice_ids.map! do |invoice|
+      invoice.id
+    end
+    invoice_ids.map do |id|
+      cst.get_invoice_items_from_se(id)
+    end
   end
 end

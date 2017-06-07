@@ -54,4 +54,8 @@ class CustomerRepository
   def get_invoices_for_customer_id(id)
     se.find_invoices_by_customer_id(id)
   end
+
+  def get_invoice_items_from_se(id)
+    se.find_invoice_items_by_invoice_id(id)
+  end
 end

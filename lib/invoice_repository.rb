@@ -34,10 +34,9 @@ class InvoiceRepository
 	end
 
 	def find_all_by_customer_id(customer_id)
-		customer = all.select do |instance|
-			instance if instance.customer_id == customer_id
+		all.select do |instance|
+			instance.customer_id == customer_id
 		end
-		return customer
 	end
 
 	def find_all_by_merchant_id(merchant_id)

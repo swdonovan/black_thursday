@@ -293,23 +293,55 @@ class SalesAnalyst
 
 	def one_time_buyers
     # invoices = find_single_invoice_customers(se.customers.all)
-		transaction_count(find_single_invoice_customers(se.customers.all))
+		single_invoice_cust(find_single_trans_invoices(se.invoices.all))
 	end
 
-	def find_single_invoice_customers(customers)
-		cust = []
-		customers.map do |customer|
-			cust << customer.invoices if customer.invoices.length == 1
+	def find_single_trans_invoices(invoices)
+		inv = invoices.select do |invoice|
+			invoice if invoice.transactions.length == 1
 		end
-		cust.flatten
+		inv
 	end
 
-	def transaction_count(invoices)
-		invoices.select do |invoice|
-			invoice.transactions.length == 1
+	def single_invoice_cust(invoices)
+		p_i_f = invoices.map do |invoice|
+			invoice
+		end
+
+	end
+
+	def highest_volume_items(customer_id)
+		customer = se.customers.find_by_id(customer_id)
+		items_list = customer.invoice_items.flatten
+		items = items_list.group_by do |item|
+			item.item_id
+		end
+		sorted = items.keys.inject({}) do |key, item|
+			key[item] = [items[item][0].quantity]; key
+		end
+		sorted = sorted.keys.select do |key|
+			sorted[key] == sorted.values.max
+		end
+		sorted.map! do |item_ids|
+			se.items.find_by_id(item_ids)
 		end
 	end
 
+	def customers_with_unpaid_invoices
+		customers = se.customers.all
+		
+		invoices = customers.map! do |customers|
+			customers.invoices
+		end
+		paid_check(invoices)
+	end
+
+	def paid_check(invoices)
+		paid_check = invoices.flatten.select do |invoice|
+			invoice if invoice.status == :pending && invoice.is_paid_in_full?
+		end
+		paid_check
+	end
 end
 # @sales_engine_dos = SalesEngine.from_csv({
 # 	:items     => './data/items.csv',
