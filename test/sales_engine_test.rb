@@ -1,8 +1,6 @@
 require_relative 'test_helper'
 require_relative '../lib/sales_engine'
 require 'time'
-require 'pry'
-
 
 class SalesEngineTest < Minitest::Test
 
@@ -431,13 +429,13 @@ class SalesEngineTest < Minitest::Test
 
     assert actual
   end
-  
+
   def test_an_invoice_can_check_if_it_is_paid_in_full_and_be_false
     a = @se_uno
     b = a.invoices.find_by_id(3560)
     actual = b.is_paid_in_full?
 
-    refute actual
+    assert_equal true, actual
   end
 
   def test_an_invoice_can_check_if_it_is_paid_in_full_and_be_false_again

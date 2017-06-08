@@ -1,10 +1,7 @@
-require 'minitest/autorun'
-require 'minitest/emoji'
-require 'minitest/pride'
+require_relative 'test_helper'
 require_relative '../lib/item_repository'
 require_relative '../lib/sales_engine'
 require_relative '../lib/item'
-require 'pry'
 
 class ItemRepositoryTest < Minitest::Test
 
