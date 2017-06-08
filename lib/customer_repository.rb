@@ -8,11 +8,12 @@ class CustomerRepository
   :se
 
   def inspect
-    "#<#{self.class} #{@invoices.size} rows>"
+    "#<#{self.class} #{@all.size} rows>"
   end
 
   def initialize(customer_info, se)
     @se = se
+    @all = nil
     @contents = CSV.open customer_info, headers: true,
     header_converters: :symbol
     read_lines

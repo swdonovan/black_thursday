@@ -10,12 +10,13 @@ class ItemRepository
 
   def initialize(item_info, se)
     @se = se
+    @all = nil
     @contents = CSV.open item_info, headers: true, header_converters: :symbol
     read_lines
   end
 
   def inspect
-    "#<#{self.class} #{@items.size} rows>"
+    "#<#{self.class} #{@all.size} rows>"
   end
 
   def read_lines

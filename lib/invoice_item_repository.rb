@@ -7,12 +7,10 @@ class InvoiceItemRepository
   :all,
   :se
 
-  def inspect
-    "#<#{self.class} #{@invoices.size} rows>"
-  end
 
   def initialize(invoice_item_info, se)
     @se = se
+    @all = nil
     @contents = CSV.open invoice_item_info, headers: true,
     header_converters: :symbol
     read_lines
@@ -53,5 +51,9 @@ class InvoiceItemRepository
       se.items.find_by_id(inv_item.item_id)
     end
     items
+  end
+
+  def inspect
+    "#<#{self.class} #{@all.size} rows>"
   end
 end

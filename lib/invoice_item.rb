@@ -21,7 +21,7 @@ class InvoiceItem
     @quantity   = invoice_item_info[:quantity].to_i
     @created_at = Time.parse(invoice_item_info[:created_at].to_s)
     @updated_at = Time.parse(invoice_item_info[:updated_at].to_s)
-    @unit_price = ((to_big_decimal(invoice_item_info[:unit_price]))/ 100) 
+    @unit_price = ((to_big_decimal(invoice_item_info[:unit_price]))/ 100)
   end
 
   def to_big_decimal(price)

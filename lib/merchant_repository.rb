@@ -11,17 +11,14 @@ class MerchantRepository
 
   def initialize(merchant_info, se)
     @se = se
-    open_file(merchant_info)
+    @all = nil
+    @contents = CSV.open merchant_info, headers: true,
+     header_converters: :symbol
     read_lines
   end
 
   def inspect
-    "#<#{self.class} #{@merchants.size} rows>"
-  end
-
-  def open_file(merchant_info)
-    @contents = CSV.open merchant_info, headers: true,
-     header_converters: :symbol
+    "#<#{self.class} #{@all.size} rows>"
   end
 
   def read_lines
