@@ -20,7 +20,7 @@ class Item
     @name        = item_info[:name]
     @id          = item_info[:id].to_i
     @description = item_info[:description]
-    @unit_price  = ((to_big_decimal(item_info[:unit_price]))/ 100)
+    @unit_price  = ((item_info[:unit_price].to_d)/ 100)
     @created_at  = Time.parse(item_info[:created_at])
     @updated_at  = Time.parse(item_info[:updated_at])
     @merchant_id = item_info[:merchant_id].to_i
