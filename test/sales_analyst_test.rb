@@ -1,5 +1,4 @@
 require_relative 'test_helper'
-require 'pry'
 require_relative '../lib/sales_analyst'
 require_relative '../lib/sales_engine'
 
