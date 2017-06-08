@@ -1,5 +1,4 @@
 require_relative 'sales_engine'
-require 'pry'
 require 'date'
 require 'time'
 
@@ -11,32 +10,32 @@ class SalesAnalyst
   end
 
   def all_merchants
-    @all_merchants = se.merchants.all
+    se.merchants.all
   end
 
   def average_items_per_merchant
-    find_average(@all_merchants)
+    find_average(all_merchants)
   end
 
-  def find_average(all_merchants)
-    numerator = setup_avg(all_merchants).inject(0) do |sum, instance|
+  def find_average(merchants)
+    numerator = setup_avg(merchants).inject(0) do |sum, instance|
       sum + instance.length
     end
-    average = numerator.to_f / find_denom(setup_avg(all_merchants)).to_f
+    average = numerator.to_f / find_denom(setup_avg(merchants)).to_f
     average.round(2)
   end
 
-  def setup_avg(all_merchants)
-    merchants = []
-    all_merchants.map do |merch|
-      merchants << merch.items
+  def setup_avg(merchants)
+    merchants_list = []
+    merchants.map do |merch|
+      merchants_list << merch.items
     end
-    merchants
+    merchants_list
   end
 
   def average_items_per_merchant_standard_deviation
-    average = find_average(@all_merchants)
-    setup = setup_avg(@all_merchants)
+    average = find_average(all_merchants)
+    setup = setup_avg(all_merchants)
     standard_deviation = standard_deviation_computation(setup, average)
   end
 
@@ -50,7 +49,6 @@ class SalesAnalyst
 
   def merchants_with_high_item_count
     st_d = average_items_per_merchant_standard_deviation
-    all_merchants = @all_merchants
     find_high_item_merchants(st_d, all_merchants, find_average(all_merchants))
   end
 
@@ -84,7 +82,8 @@ class SalesAnalyst
   def find_denom(items)
     if items.length == 0
       return 1
-    else items.length
+    else
+      items.length
     end
   end
 
@@ -137,7 +136,7 @@ class SalesAnalyst
   end
 
   def average_invoices_per_merchant
-    merchants = @all_merchants
+    merchants = all_merchants
     invoices = se.invoices.all
     average = average(invoices.length, merchants.length)
     average.round(2)
@@ -150,11 +149,9 @@ class SalesAnalyst
   end
 
   def merch_invoice_instance
-    all_merchants = @all_merchants
-    all_merchants = all_merchants.map do |merchant|
+    all_merchants.map do |merchant|
       merchant.invoices
     end
-    all_merchants
   end
 
   def top_merchants_by_invoice_count
@@ -166,7 +163,7 @@ class SalesAnalyst
   def two_plus_std_devs(std_dev, average)
     top_count = []
     two_sd = (average.to_f + (std_dev*2))
-    @all_merchants.select do |merchant|
+    all_merchants.select do |merchant|
       top_count << merchant if merchant.invoices.length >= two_sd
     end
     top_count
@@ -174,7 +171,7 @@ class SalesAnalyst
 
   def two_minus_std_devs(std_dev, average)
     bottom_count = []
-    @all_merchants.select do |merchant|
+    all_merchants.select do |merchant|
       if merchant.invoices.length <= (average.to_f - (std_dev * 2))
         bottom_count << merchant
       end
@@ -265,7 +262,7 @@ class SalesAnalyst
   end
 
   def sum_invoices(invoices)
-    var = invoices.inject(0) do |sum, invoice|
+    invoices.inject(0) do |sum, invoice|
       sum + invoice.total.to_f
     end
   end
@@ -298,51 +295,56 @@ class SalesAnalyst
   end
 
   def one_time_buyers
-    # invoices = find_single_invoice_customers(se.customers.all)
-    trans = se.transactions.all
-    one_time = trans.group_by do |transaction|
-      transaction.invoice_id
+    invoices = se.invoices.all.select { |invoice| invoice.is_paid_in_full?}
+    find_single_trans_invoices(invoices)
+  end
+
+  def find_single_trans_invoices(invoices)
+    single_trans = invoices.select do |invoice|
+      invoice if invoice.transactions.length == 1
     end
-    one = one_time.keys.select do |key|
-      one_time[key].length == 1
+    convert_to_customers(single_trans)
+  end
+
+  def convert_to_customers(single_trans)
+    single_trans_by_cust = single_trans.map do |invoice|
+      invoice.customer
     end
-    a = se.customers.all
-    b = a.select do |customer|
-      customer.invoices.all? {|invoice| invoice.is_paid_in_full? == true}
+    get_one_time_buyers(single_trans_by_cust)
+  end
+
+  def get_one_time_buyers(single_trans_by_cust)
+    single_trans_by_cust.select do |customer|
+      customer if customer.invoices.length == 1
     end
-    c = []
-    150.times do
-      c << b.shift
-    end
-    c
-    single_invoice_cust(find_single_trans_invoices(se.customers.all))
   end
 
   def one_time_buyers_top_items
-    a = [se.items.find_by_id(263518806)]
-  end
-
-  def find_single_trans_invoices(customers)
-    customers.select do |customer|
-      customer.invoices.length == 2
+    single_buyer_invoices = one_time_buyers.map do |customer|
+      customer.invoices
     end
-  end
-
-  def single_invoice_cust(customers)
-    p_i_f = customers.any do |customer|
-      customer.invoices.any? do |invoice|
-        invoice.status == :returned
-      end
+    single_buyer_invoices = single_buyer_invoices.flatten
+    single_items = single_buyer_invoices.map do |invoice|
+      invoice.items
     end
+    single_items = single_items.flatten.compact
+    sorted_item_hash = single_items.group_by do |item|
+      item.id
+    end
+    item_id = sorted_item_hash.keys.max_by do |key|
+      sorted_item_hash[key].length
+    end
+    top_single_item = [se.items.find_by_id(item_id)]
+    # top_item = [top_single_item]
   end
 
   def items_bought_in_year(customer_id, year)
-    invoices = find_invoice_year(se.customers.find_by_id(customer_id))
+    invoices = find_invoice_year(se.customers.find_by_id(customer_id), year)
     items = map_to_items(invoices)
     items.flatten
   end
 
-  def find_invoice_year(customer)
+  def find_invoice_year(customer, year)
     customer.invoices.find_all do |invoice|
       invoice.created_at.strftime("%Y").to_s == year.to_s
     end
@@ -435,7 +437,7 @@ class SalesAnalyst
   end
 
   def price_average
-    find_average_prices(@all_merchants) / find_denom(@all_merchants)
+    find_average_prices(all_merchants) / find_denom(all_merchants)
   end
 
   def item_dollar_price(item)

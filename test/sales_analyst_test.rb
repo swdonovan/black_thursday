@@ -293,18 +293,18 @@ class SalesAnalystTest < Minitest::Test
   def test_it_can_find_top_buyers
     a = SalesAnalyst.new(@sales_engine_dos)
     actual = a.top_buyers(30)
-    expected = "Molly Gleichner"
+    expected = "Fisher"
 
-    assert_equal expected, actual[0]
+    assert_equal expected, actual[0].last_name
     assert_equal 30, actual.length
   end
 
   def test_it_can_find_top_buyers_for_set_number
     a = SalesAnalyst.new(@sales_engine)
     actual = a.top_buyers(5)
-    expected = "Parker Daugherty"
+    expected = "Parker"
 
-    assert_equal expected, actual[0]
+    assert_equal expected, actual[0].first_name
     assert_equal 5, actual.length
   end
 
@@ -313,15 +313,15 @@ class SalesAnalystTest < Minitest::Test
     actual = a.top_merchant_for_customer(5)
     expected = "katieelizabethcrafts"
 
-    assert_equal expected, actual
+    assert_equal expected, actual.name
   end
 
   def test_it_can_find_top_merchant_for_customer_764
     a = SalesAnalyst.new(@sales_engine_dos)
     actual = a.top_merchant_for_customer(764)
-    expected = "PaulMagi"
+    expected = "LeatherMinn"
 
-    assert_equal expected, actual
+    assert_equal expected, actual.name
   end
 
   def test_it_can_find_top_merchant_for_customer_988
@@ -329,7 +329,7 @@ class SalesAnalystTest < Minitest::Test
     actual = a.top_merchant_for_customer(988)
     expected = "esellermart"
 
-    assert_equal expected, actual
+    assert_equal expected, actual.name
   end
 
   def test_it_can_find_one_time_buyers
@@ -337,13 +337,13 @@ class SalesAnalystTest < Minitest::Test
     actual = a.one_time_buyers
     expected = ['harry']
 
-    assert_equal expected, actual
+    assert_equal expected, actual.name
   end
 
   def test_it_can_find_one_time_buyers_length
     a = SalesAnalyst.new(@sales_engine_dos)
     actual = a.one_time_buyers
 
-    assert_equal 3, actual.length
+    assert_equal 20, actual.length
   end
 end
