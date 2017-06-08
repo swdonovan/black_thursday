@@ -335,9 +335,9 @@ class SalesAnalystTest < Minitest::Test
   def test_it_can_find_one_time_buyers
     a = SalesAnalyst.new(@sales_engine_dos)
     actual = a.one_time_buyers
-    expected = ['harry']
+    expected = 'Damian'
 
-    assert_equal expected, actual.name
+    assert_equal expected, actual[0].first_name
   end
 
   def test_it_can_find_one_time_buyers_length
